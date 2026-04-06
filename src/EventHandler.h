@@ -2,6 +2,7 @@
 #define EVENTHANDLER_H
 
 #include "Window.h"
+#include "Input.h"
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
@@ -18,7 +19,7 @@ namespace sk {
             EventHandler();
             ~EventHandler();
             const sf::Event& getEvent();
-            void pollEvents(sk::Window& window);
+            void pollEvents(sk::Window& window, sk::Input& input);
 
 
     };

@@ -41,3 +41,5 @@ bool Window::pollEvent(sf::Event& event){
     return mRenderWindow->pollEvent(event);
 }
 
+
+const sf::RenderWindow* Window::getRenderWindow(){ return mRenderWindow; }

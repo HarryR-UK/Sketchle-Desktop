@@ -5,6 +5,7 @@
 #include<SFML/Graphics.hpp>
 
 #include "EventHandler.h"
+#include "Input.h"
 #include "Window.h"
 
 namespace sk{
@@ -12,6 +13,7 @@ namespace sk{
         private:
             sk::Window mWindow;
             sk::EventHandler mEventHandler;
+            sk::Input mInput;
 
         private:
             void render();

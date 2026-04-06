@@ -12,6 +12,13 @@ add_executable(${PROJECT_NAME}
     src/Application.cpp
     src/Window.cpp
     src/EventHandler.cpp
+    src/Input.cpp
+
+    src/gui/GUIElement.cpp
+    src/gui/Button.cpp
+
+    src/scene/Scene.cpp
+    src/scene/SceneManager.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

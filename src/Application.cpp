@@ -20,14 +20,16 @@ void Application::render(){
 
 void Application::run(){
     while(mWindow.getIsWindowOpen()){
+        // poll events
+        mEventHandler.pollEvents(mWindow, mInput);
 
         // update
+        mInput.update(mWindow);
+
         
         // rendering
         render();
         
-        // poll events
-        mEventHandler.pollEvents(mWindow);
 
     }
 }

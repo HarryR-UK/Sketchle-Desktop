@@ -36,6 +36,7 @@ namespace sk {
             void display();
             void close();
             bool pollEvent(sf::Event& event);
+            const sf::RenderWindow* getRenderWindow();
 
     };
 
