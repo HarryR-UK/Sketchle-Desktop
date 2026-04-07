@@ -15,6 +15,7 @@ namespace sk {
         public:
             virtual void update();
             virtual void draw(sk::Window& window);
+            virtual ~GUIElement();
 
     };
 
