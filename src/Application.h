@@ -9,6 +9,8 @@
 #include "Window.h"
 #include "scene/SceneManager.h"
 
+#include "scene/scenes/MainMenuScene.h"
+
 namespace sk{
     class Application{
         private:
@@ -16,6 +18,8 @@ namespace sk{
             sk::EventHandler mEventHandler;
             sk::Input mInput;
             sk::SceneManager mSceneManager;
+
+            
 
         private:
             void render();

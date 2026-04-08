@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "../gui/GUIElement.h"
+#include "../Input.h"
 #include <memory>
 #include <vector>
 namespace sk {
@@ -11,8 +12,9 @@ namespace sk {
  
 
         public:
-            virtual void update();
-            virtual void draw(sk::Window& window);
+            void draw(sk::Window& window);
+            void update(const Input& input);
+            void addGUIElement(std::unique_ptr<GUIElement> e);
 
             Scene();
             virtual ~Scene(); // delete all GUIElements!!!!

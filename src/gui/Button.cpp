@@ -1,11 +1,65 @@
 #include "Button.h"
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Event.hpp>
+#include <cassert>
 using namespace sk;
 
+Button::Button(){}
 
-void Button::update(){
-    // update button here
+Button::Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font){
+    this->init(txt, size, bgColor, txtColor, font);
 }
+
+void Button::init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font){
+    mText.setString(txt);
+    mText.setFillColor(txtColor);
+    mText.setFont(font);
+    mText.setCharacterSize(CHARACTER_SIZE);
+
+    mButtonShape.setSize(size);
+    mButtonShape.setFillColor(bgColor);
+}
+
+void Button::setPosition(const sf::Vector2f& pos){
+    mButtonShape.setPosition(pos);
+    mPosition = sf::Vector2f(pos);
+    
+    // based on SFML coordinate system (0,0) being top left
+    // we can center text accurately with this knowledge (using half the width of the button shapes)
+    float xPos = (pos.x + mButtonShape.getGlobalBounds().width * 0.5f) - (mText.getGlobalBounds().width * 0.5f);
+    float yPos = (pos.y + mButtonShape.getGlobalBounds().height * 0.5f) - (mText.getGlobalBounds().height * 0.5f);
+
+    mText.setPosition(sf::Vector2f(xPos, yPos));
+
+
+
+}
+
+const sf::Vector2f& Button::getPosition(){ return mPosition; }
+
+void Button::update(const Input& input){
+    sf::Vector2f btnPos = mButtonShape.getPosition();
+
+    float btnPosWidth = mButtonShape.getPosition().x + mButtonShape.getLocalBounds().width;
+    float btnPosHeight = mButtonShape.getPosition().y + mButtonShape.getLocalBounds().height;
+
+    const sf::Vector2i* mousePos = &input.mousePositionWindow;
+    
+    // checking mouse is in the bounds
+    if(mousePos->x < btnPosWidth && mousePos->x > btnPos.x && mousePos->y < btnPosHeight && mousePos->y > btnPos.y){
+        if(input.mouseButton1Clicked){
+            if(onClick) onClick();
+        }
+    }
+
+}
+
+
+
+
 
 void Button::draw(sk::Window& window){
     // render all button elements here
+    window.getRenderWindow()->draw(mButtonShape);
+    window.getRenderWindow()->draw(mText);
 }

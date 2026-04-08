@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <memory>
 
 using namespace sk;
 
@@ -8,11 +9,19 @@ Scene::~Scene(){
 
 }
 
-void Scene::update(){
-    for(auto& e: mGUIElements) e->update();
-
+void Scene::update(const Input& input){
+    for(auto& e : mGUIElements){
+        e->update(input);
+    }
 }
 
 void Scene::draw(sk::Window& window){
-    for(auto& e: mGUIElements) e->draw(window);
+    for(auto& e : mGUIElements){
+        e->draw(window);
+    }
 }
+
+void Scene::addGUIElement(std::unique_ptr<GUIElement> e){
+    mGUIElements.push_back(std::move(e));
+}
+

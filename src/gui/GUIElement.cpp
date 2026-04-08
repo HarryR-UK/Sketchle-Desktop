@@ -2,9 +2,13 @@
 
 using namespace sk;
 
-void GUIElement::update(){
+GUIElement::~GUIElement(){
 
 }
+
 void GUIElement::draw(sk::Window& window){
     
 }
+
+void GUIElement::update(const Input& input){}
+

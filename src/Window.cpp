@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <SFML/Graphics/Sprite.hpp>
 #include <cstdlib>
 
 using namespace sk;
@@ -42,4 +43,5 @@ bool Window::pollEvent(sf::Event& event){
 }
 
 
-const sf::RenderWindow* Window::getRenderWindow(){ return mRenderWindow; }
+
+sf::RenderWindow* Window::getRenderWindow(){ return mRenderWindow; }

@@ -19,6 +19,8 @@ add_executable(${PROJECT_NAME}
 
     src/scene/Scene.cpp
     src/scene/SceneManager.cpp
+
+    src/scene/scenes/MainMenuScene.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -14,9 +14,12 @@ namespace sk {
 
         public:
             template<typename T, typename... Args>
-            void changeScene(Args&&... args);
+            void changeScene(Args&&... args){
+                mCurrentScene = std::make_unique<T>(std::forward<Args>(args)...);
+            }
 
-            void update();
+            void update(const Input& input);
+
             void draw(sk::Window& window);
 
 

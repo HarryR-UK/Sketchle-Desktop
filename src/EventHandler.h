@@ -19,7 +19,7 @@ namespace sk {
             EventHandler();
             ~EventHandler();
             const sf::Event& getEvent();
-            void pollEvents(sk::Window& window, sk::Input& input);
+            void pollEvents(sk::Window& window);
 
 
     };

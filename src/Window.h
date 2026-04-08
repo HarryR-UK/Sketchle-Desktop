@@ -34,9 +34,10 @@ namespace sk {
             const bool& getIsWindowOpen();
             void clear();
             void display();
+
             void close();
             bool pollEvent(sf::Event& event);
-            const sf::RenderWindow* getRenderWindow();
+            sf::RenderWindow* getRenderWindow();
 
     };
 
