@@ -7,6 +7,7 @@
 #include "EventHandler.h"
 #include "Input.h"
 #include "Window.h"
+#include "scene/SceneManager.h"
 
 namespace sk{
     class Application{
@@ -14,6 +15,7 @@ namespace sk{
             sk::Window mWindow;
             sk::EventHandler mEventHandler;
             sk::Input mInput;
+            sk::SceneManager mSceneManager;
 
         private:
             void render();

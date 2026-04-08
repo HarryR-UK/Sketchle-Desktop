@@ -25,6 +25,7 @@ void Application::run(){
 
         // update
         mInput.update(mWindow);
+        //mSceneManager.update();
 
         
         // rendering
