@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "GUIElement.h"
 
 using namespace sk;

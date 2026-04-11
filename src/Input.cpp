@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "Input.h"
 #include <SFML/Window/Mouse.hpp>
 

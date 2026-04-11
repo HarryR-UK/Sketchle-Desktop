@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #ifndef SCENE_H
 #define SCENE_H
 

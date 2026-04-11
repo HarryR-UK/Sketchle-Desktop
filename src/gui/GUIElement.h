@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #ifndef GUIELEMENT_H
 #define GUIELEMENT_H
 

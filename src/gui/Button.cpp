@@ -1,4 +1,9 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "Button.h"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cassert>
@@ -6,15 +11,20 @@ using namespace sk;
 
 Button::Button(){}
 
-Button::Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font){
-    this->init(txt, size, bgColor, txtColor, font);
+Button::Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize){
+    this->init(txt, size, bgColor, txtColor, font, fontSize);
 }
 
-void Button::init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font){
+void Button::init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize){
     mText.setString(txt);
     mText.setFillColor(txtColor);
     mText.setFont(font);
-    mText.setCharacterSize(CHARACTER_SIZE);
+    mText.setCharacterSize(fontSize);
+
+    mBtnColor = bgColor;
+    mTextColor = txtColor;
+    mBtnHoverColor = bgColor;
+    mTextHoverColor = txtColor;
 
     mButtonShape.setSize(size);
     mButtonShape.setFillColor(bgColor);
@@ -35,6 +45,26 @@ void Button::setPosition(const sf::Vector2f& pos){
 
 }
 
+void Button::setBtnHoverColor(const sf::Color& c){
+    mBtnHoverColor = c;
+}
+
+void Button::setTxtHoverColor(const sf::Color& c){
+    mTextHoverColor = c;
+}
+
+void Button::mouseHovered(){
+    mButtonShape.setFillColor(mBtnHoverColor);
+    mText.setFillColor(mTextHoverColor);
+}
+
+void Button::mouseNotHovered(){
+    if(mButtonShape.getFillColor() == mBtnColor && mText.getFillColor() == mTextColor) return; 
+
+    mButtonShape.setFillColor(mBtnColor);
+    mText.setFillColor(mTextColor);
+}
+
 const sf::Vector2f& Button::getPosition(){ return mPosition; }
 
 void Button::update(const Input& input){
@@ -47,9 +77,12 @@ void Button::update(const Input& input){
     
     // checking mouse is in the bounds
     if(mousePos->x < btnPosWidth && mousePos->x > btnPos.x && mousePos->y < btnPosHeight && mousePos->y > btnPos.y){
+        mouseHovered();
         if(input.mouseButton1Clicked){
             if(onClick) onClick();
         }
+    }else{
+        mouseNotHovered();
     }
 
 }

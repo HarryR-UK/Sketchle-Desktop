@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #ifndef BUTTON_H
 #define BUTTON_H
 #include "GUIElement.h"
@@ -6,7 +10,6 @@
 #include <SFML/Window/Event.hpp>
 #include <functional>
 
-#define CHARACTER_SIZE 12
 
 namespace sk {
     class Button : public GUIElement{
@@ -15,15 +18,25 @@ namespace sk {
             sf::RectangleShape mButtonShape;
             sf::Text mText;
             sf::Vector2f mPosition;
+            sf::Color mBtnColor = sf::Color::White;
+            sf::Color mTextColor = sf::Color::Black;
+
+            sf::Color mBtnHoverColor = sf::Color::White;
+            sf::Color mTextHoverColor = sf::Color::Black;
+
+
         private:
 
         public:
 
         public:
             Button();
-            Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font);
+            Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize);
 
-            void init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font);;
+            void init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize);;
+
+            void setBtnHoverColor(const sf::Color& c);
+            void setTxtHoverColor(const sf::Color& c);
 
             void draw(sk::Window& window) override;
 
@@ -31,6 +44,9 @@ namespace sk {
             const sf::Vector2f& getPosition();
 
             void update(const Input& input) override;
+
+            void mouseHovered();
+            void mouseNotHovered();
 
             std::function<void()> onClick;
         

@@ -1,7 +1,12 @@
+//
+// Author: Harry Rotheram
+//
+//
 #ifndef MAINMENUSCENE_H
 #define MAINMENUSCENE_H
 
 #include "../Scene.h"
+#include "../../Window.h"
 #include "../../gui/Button.h"
 #include <SFML/Graphics/Font.hpp>
 
@@ -12,7 +17,7 @@ namespace sk {
         private:
         public:
         public:
-            MainMenuScene();
+            MainMenuScene(sk::Window& window);
 
     };
 

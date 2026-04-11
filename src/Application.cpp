@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "Application.h"
 #include "scene/scenes/MainMenuScene.h"
 using namespace sk;
@@ -22,8 +26,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    sk::MainMenuScene mainMenuScene;
-    mSceneManager.changeScene<MainMenuScene>();
+    mSceneManager.changeScene<MainMenuScene>(mWindow);
 
     while(mWindow.getIsWindowOpen()){
         // poll events

@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "EventHandler.h"
 
 using namespace sk;

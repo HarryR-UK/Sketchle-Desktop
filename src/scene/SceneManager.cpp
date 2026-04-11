@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "SceneManager.h"
 using namespace sk;
 

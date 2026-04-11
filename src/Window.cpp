@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "Window.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <cstdlib>
@@ -7,6 +11,8 @@ using namespace sk;
 Window::Window(const int& windowH, const int& windowW, const int& antiAlias){
     mVideoMode.height = windowH;
     mVideoMode.width = windowW;
+
+    mWindowSize = {windowW, windowH};
 
     mContextSettings.antialiasingLevel = antiAlias;
 
@@ -22,6 +28,9 @@ Window::Window(const int& windowH, const int& windowW, const int& antiAlias){
 
 }
 
+const sf::Vector2i& Window::getWindowSize(){
+    return mWindowSize;
+}
 Window::~Window(){
     mIsWindowOpen = false;
     delete mRenderWindow;

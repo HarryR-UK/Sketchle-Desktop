@@ -1,3 +1,7 @@
+//
+// Author: Harry Rotheram
+//
+//
 #include "Scene.h"
 #include <memory>
 

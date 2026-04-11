@@ -1,6 +1,13 @@
+//
+// Author: Harry Rotheram
+//
+//
+
+
 #ifndef WINDOW_H
 #define WINDOW_H
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window.hpp>
 
 #include <iostream>
@@ -15,9 +22,8 @@ namespace sk {
             sf::RenderWindow* mRenderWindow = nullptr;
             sf::ContextSettings mContextSettings;
             sf::VideoMode mVideoMode;
-
-            int mWindowHeight;
-            int mWindowWidth;
+            
+            veci mWindowSize;
 
             veci mMousePosScreen;
             veci mMousePosWindow;
@@ -38,6 +44,8 @@ namespace sk {
             void close();
             bool pollEvent(sf::Event& event);
             sf::RenderWindow* getRenderWindow();
+
+            const veci& getWindowSize();
 
     };
 
