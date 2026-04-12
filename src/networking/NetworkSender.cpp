@@ -3,6 +3,10 @@
 
 using namespace sk;
 
-NetworkSender::NetworkSender(const NetworkType& type){
-    
+NetworkSender::NetworkSender(NetworkType type)
+: mType {type}
+{
 }
+
+
+
