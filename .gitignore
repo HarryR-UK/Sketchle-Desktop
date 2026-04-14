@@ -9,6 +9,9 @@ build/bin/*
 !build/bin/assets/
 !build/bin/assets/**
 
+build/bin/.DS_Store
+build/bin/assets/.DS_Store
+
 .cache/
 
 compile_commands.json
