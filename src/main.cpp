@@ -7,12 +7,15 @@
 #include <stdio.h>
 
 #include "Application.h"
+#include "networking/NetworkClient.h"
 
 int main(void)
 {
 
-    sk::Application app;
-    app.run();
+    //sk::Application app;
+    //app.run();
+    
+    sk::NetworkClient net;
 
 
     return EXIT_SUCCESS;

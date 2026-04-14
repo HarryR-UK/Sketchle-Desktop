@@ -21,6 +21,9 @@ add_executable(${PROJECT_NAME}
     src/scene/SceneManager.cpp
 
     src/scene/scenes/MainMenuScene.cpp
+
+
+    src/networking/NetworkClient.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
