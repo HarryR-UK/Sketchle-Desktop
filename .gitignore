@@ -2,6 +2,13 @@
 
 build/*
 
+!build/bin/
+
+build/bin/*
+
+!build/bin/assets/
+!build/bin/assets/**
+
 .cache/
 
 compile_commands.json
