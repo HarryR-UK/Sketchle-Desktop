@@ -15,8 +15,6 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     auto mTestButton = std::make_unique<sk::Button>();
     sf::Vector2i windowSize = window.getWindowSize();
 
-    std::cout << "Window Size: " << windowSize.x << ", " << windowSize.y << '\n';
-
     mTestButton->init("TEST", {100,100}, sf::Color::White, {0,0,0}, mFont, 24);
     mTestButton->setPosition({(float)(windowSize.x * 0.5f),(float)(windowSize.y * 0.5f)});
 
