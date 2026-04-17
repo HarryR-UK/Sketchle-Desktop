@@ -3,13 +3,16 @@
 //
 //
 #include "Application.h"
+#include "scene/scenes/CanvasScene.h"
 #include "scene/scenes/MainMenuScene.h"
+#include <cmath>
 using namespace sk;
 
 Application::Application()
-    : mWindow(500, 500, 3)
+    : mWindow(0, 0, 8)
 {
-
+    sf::Vector2u monitorRes = mWindow.getMonitorResolution();
+    mWindow.setWindowSize({static_cast<unsigned int>(monitorRes.x * 0.7f), static_cast<unsigned int>(monitorRes.y * 0.7f)});
 }
 
 Application::~Application(){
@@ -26,7 +29,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<MainMenuScene>(mWindow);
+    mSceneManager.changeScene<CanvasScene>(mWindow);
 
     while(mWindow.getIsWindowOpen()){
         // poll events

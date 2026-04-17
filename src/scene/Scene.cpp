@@ -10,7 +10,6 @@ using namespace sk;
 Scene::Scene(){}
 
 Scene::~Scene(){
-
 }
 
 void Scene::update(const Input& input){

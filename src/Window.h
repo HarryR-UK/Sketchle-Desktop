@@ -22,6 +22,8 @@ namespace sk {
             sf::RenderWindow* mRenderWindow = nullptr;
             sf::ContextSettings mContextSettings;
             sf::VideoMode mVideoMode;
+
+            sf::View mView;
             
             veci mWindowSize;
 
@@ -39,6 +41,7 @@ namespace sk {
             ~Window();
             const bool& getIsWindowOpen();
             void clear();
+            void clear(const sf::Color& c);
             void display();
 
             void close();
@@ -46,6 +49,8 @@ namespace sk {
             sf::RenderWindow* getRenderWindow();
 
             const veci& getWindowSize();
+            sf::Vector2u getMonitorResolution();
+            void setWindowSize(const sf::Vector2u& size);
 
     };
 

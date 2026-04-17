@@ -19,7 +19,7 @@ namespace sk {
         public:
 
         public:
-            virtual ~GUIElement();
+            virtual ~GUIElement()= default;
             virtual void update(const Input& input);
             virtual void draw(sk::Window& window);
             std::function<void()> onClick;
