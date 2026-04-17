@@ -15,10 +15,8 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     auto mTestButton = std::make_unique<sk::Button>();
     sf::Vector2i windowSize = window.getWindowSize();
 
-    std::cout << "Window Size: " << windowSize.x << ", " << windowSize.y << '\n';
-
-    mTestButton->init("TEST", {100,100}, sf::Color::White, {0,0,0}, mFont, 24);
-    mTestButton->setPosition({(float)(windowSize.x * 0.5f),(float)(windowSize.y * 0.5f)});
+    mTestButton->init("TEST", {100,99}, sf::Color::Red, {0,0,0}, mFont, 26);
+    mTestButton->setPosition({(float)(windowSize.x * 0.4f),(float)(windowSize.y * 0.5f)});
 
     mTestButton->setBtnHoverColor(sf::Color::Red);
     mTestButton->setTxtHoverColor(sf::Color::Yellow);
