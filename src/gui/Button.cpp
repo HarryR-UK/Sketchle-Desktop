@@ -28,6 +28,8 @@ void Button::init(const std::string& txt, const sf::Vector2f& size, const sf::Co
 
     mButtonShape.setSize(size);
     mButtonShape.setFillColor(bgColor);
+
+    mButtonSize = size;
 }
 
 void Button::setPosition(const sf::Vector2f& pos){
@@ -95,4 +97,8 @@ void Button::draw(sk::Window& window){
     // render all button elements here
     window.getRenderWindow()->draw(mButtonShape);
     window.getRenderWindow()->draw(mText);
+}
+
+sf::Vector2f getButtonSize(){
+    return mButtonSize;
 }
