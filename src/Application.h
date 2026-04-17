@@ -14,6 +14,7 @@
 #include "scene/SceneManager.h"
 
 #include "scene/scenes/MainMenuScene.h"
+#include "scene/scenes/CanvasScene.h"
 
 namespace sk{
     class Application{

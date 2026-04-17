@@ -48,7 +48,7 @@ namespace sk {
             void mouseHovered();
             void mouseNotHovered();
 
-            std::function<void()> onClick;
+
         
     };
 

@@ -6,10 +6,6 @@
 
 using namespace sk;
 
-GUIElement::~GUIElement(){
-
-}
-
 void GUIElement::draw(sk::Window& window){
     
 }

@@ -7,6 +7,7 @@
 
 #include "../Window.h"
 #include "../Input.h"
+#include <functional>
 
 // class should be inherited by GUI elements
 namespace sk {
@@ -18,9 +19,10 @@ namespace sk {
         public:
 
         public:
-            virtual ~GUIElement();
+            virtual ~GUIElement()= default;
             virtual void update(const Input& input);
             virtual void draw(sk::Window& window);
+            std::function<void()> onClick;
 
 
     };
