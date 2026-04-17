@@ -6,8 +6,9 @@ using namespace sk;
 void CanvasScene::initButtons(sk::Window& window){
     mFont.loadFromFile("assets/arial/ARIAL.TTF");
     std::unique_ptr<sk::Button> testButton = std::make_unique<sk::Button>();
-    testButton->init("Test", {100,100}, sf::Color::White, sf::Color::Black, mFont, 24);
-    testButton->setPosition({200,200});
+    testButton->init("Test", {20,20}, sf::Color::White, sf::Color::Black, mFont, 24);
+
+    testButton->setPosition({0,(float)window.getWindowSize().y - 20});
 
     testButton->setBtnHoverColor(sf::Color::Red);
     testButton->setTxtHoverColor(sf::Color::White);
