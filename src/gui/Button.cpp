@@ -99,6 +99,6 @@ void Button::draw(sk::Window& window){
     window.getRenderWindow()->draw(mText);
 }
 
-sf::Vector2f getButtonSize(){
+sf::Vector2f Button::getButtonSize(){
     return mButtonSize;
 }

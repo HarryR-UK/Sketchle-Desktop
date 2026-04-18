@@ -17,6 +17,8 @@ namespace sk {
         bool mouseButton2Pressed = false;
         bool mouseButton1Clicked = false;
         bool mouseButton2Clicked = false;
+        
+        sf::Uint32 lastCharTyped = 0;
 
         void update(sk::Window& window);
 

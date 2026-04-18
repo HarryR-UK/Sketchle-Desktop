@@ -33,7 +33,7 @@ void Application::run(){
 
     while(mWindow.getIsWindowOpen()){
         // poll events
-        mEventHandler.pollEvents(mWindow);
+        mEventHandler.pollEvents(mWindow, mInput);
 
         // update
         mInput.update(mWindow);
