@@ -14,3 +14,7 @@ void SceneManager::draw(sk::Window& window){
 void SceneManager::update(const Input& input){
     if(mCurrentScene) mCurrentScene->update(input);
 }
+
+void SceneManager::update(const Input&input, float dt, float elapsed){
+    if(mCurrentScene) mCurrentScene->update(input, dt, elapsed);
+}
