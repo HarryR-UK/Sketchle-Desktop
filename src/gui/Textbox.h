@@ -1,7 +1,7 @@
 //
 // Author: Finn O'Hare
 //
-
+//
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 #include "GUIElement.h"

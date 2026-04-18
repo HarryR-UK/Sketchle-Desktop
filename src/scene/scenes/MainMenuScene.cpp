@@ -50,8 +50,8 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     addGUIElement(std::move(mUnameTextbox));   
     
     // password textbox
-    auto mPasswordTextbox = std::make_unique<sk::Textbox>();
-    auto textboxPtr = mPasswordTextbox.get();
+    auto mPwordTextbox = std::make_unique<sk::Textbox>();
+    /*auto*/ textboxPtr = mPwordTextbox.get();
 
     mPwordTextbox->init("PASSWORD", {300, 50}, sf::Color::White, sf::Color::Black, mFont, 24);
     mPwordTextbox->setPlaceholder("PASSWORD");
