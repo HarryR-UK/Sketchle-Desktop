@@ -22,6 +22,8 @@ add_executable(${PROJECT_NAME}
 
     src/scene/scenes/MainMenuScene.cpp
     src/scene/scenes/CanvasScene.cpp
+
+    src/scene/scenes/CanvasTools/Tool.cpp
    
 
     src/networking/NetworkClient.cpp

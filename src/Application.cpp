@@ -29,7 +29,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<MainMenuScene>(mWindow);
+    mSceneManager.changeScene<CanvasScene>(mWindow);
 
     while(mWindow.getIsWindowOpen()){
         // poll events

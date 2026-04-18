@@ -52,16 +52,22 @@ void CanvasScene::initCanvas(sk::Window& window){
     
 }
 
-CanvasScene::CanvasScene(sk::Window& window){
+CanvasScene::CanvasScene(sk::Window& window)
+: mTool(mGridPixelSize, mGridPixelOutlineSize){
     initButtons(window);
     initCanvas(window);
 }
 
 void CanvasScene::update(const Input& input){
+    
+    mTool.update(input);
+
     Scene::update(input);
 }
 
 void CanvasScene::draw(sk::Window& window){
+    mTool.draw(window);
+
     Scene::draw(window);
 }
 

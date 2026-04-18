@@ -4,9 +4,9 @@
 #include "../Scene.h"
 #include "../../Window.h"
 #include "../../gui/Button.h"
+#include "CanvasTools/Tool.h"
 #include <array>
-
-#define CANVAS_SIZE 65
+#include"../../global.h"
 
 namespace sk {
     class CanvasScene : public Scene{
@@ -15,11 +15,14 @@ namespace sk {
             
             const sf::Vector2u mCanvasSize = {CANVAS_SIZE, CANVAS_SIZE};
             const float mGridPixelSize = 3.f;
+            const float mGridPixelOutlineSize = 1.f;
 
             std::array<std::array<sf::Color, CANVAS_SIZE>, CANVAS_SIZE> mCanvas;
 
             sf::RectangleShape mColorPixel;
             sf::RectangleShape mCursorPixelSelect;
+
+            sk::Tool mTool;
 
         private:
             void initButtons(sk::Window& window);
