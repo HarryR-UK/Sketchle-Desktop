@@ -33,7 +33,6 @@ void CanvasScene::initButtons(sk::Window& window){
     eraserButton->setBtnHoverColor(sf::Color(150, 70, 225));
     eraserButton->onClick = [this](){
         mTool.setType(ToolType::ERASE);
-        std::cout << "ERASE" << '\n';
     };
     addGUIElement(std::move(eraserButton));
 
@@ -42,7 +41,7 @@ void CanvasScene::initButtons(sk::Window& window){
     bucketButton->init("Fill", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
     bucketButton->setPosition({10, (float)(windowSize.y * 0.3f) + 120});
     bucketButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    bucketButton->onClick = [](){ std::cout << "Fill Selected" << '\n'; };
+    bucketButton->onClick = [this](){ mTool.setType(ToolType::BUCKET); };
     addGUIElement(std::move(bucketButton));
     
     //Share button
@@ -245,6 +244,48 @@ void CanvasScene::eraseStroke(const Input& input){
     
 }
 
+void CanvasScene::bucketStroke(const Input& input){
+    if(input.mouseButton1Clicked){
+        int startX = mTool.getMouseGridPosition().x;
+        int startY = mTool.getMouseGridPosition().y;
+
+        sf::Color currColor = getPixelColor(startX, startY);
+        sf::Color newColor = mTool.getColorSelected();
+
+        if(newColor == currColor) return;
+
+        std::queue<sf::Vector2i> q;
+
+        q.push({startX, startY});
+
+        while(!q.empty()){
+            sf::Vector2i p = q.front();
+            q.pop();
+
+            int x = p.x;
+            int y = p.y;
+
+            // check boundarys of canvas first
+            if(x < 0 || y < 0 || x >= CANVAS_SIZE || y >= CANVAS_SIZE)
+                continue;
+
+            if(getPixelColor(x, y) != currColor)
+                continue;
+
+            setPixelColor(x, y, newColor);
+
+            // all neighbours
+            q.push({x + 1, y});
+            q.push({x - 1, y});
+            q.push({x, y + 1});
+            q.push({x, y - 1});
+
+
+        }
+    }
+
+}
+
 void CanvasScene::update(const Input& input){ 
     mTool.update(input);
     
@@ -257,6 +298,9 @@ void CanvasScene::update(const Input& input){
             case ERASE:
                 eraseStroke(input);
                 break;
+            case BUCKET:
+                bucketStroke(input);
+                break;
             default:
                 break;
         }
@@ -266,6 +310,8 @@ void CanvasScene::update(const Input& input){
 
     Scene::update(input);
 }
+
+
 
 void CanvasScene::draw(sk::Window& window){
     window.getRenderWindow()->draw(mCanvasBuffer);

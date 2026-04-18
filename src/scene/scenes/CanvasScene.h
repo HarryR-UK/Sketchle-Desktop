@@ -12,6 +12,7 @@
 #include <array>
 #include <vector>
 #include"../../global.h"
+#include <queue>
 
 #define QUAD_POINT_COUNT 4
 
@@ -63,6 +64,7 @@ namespace sk {
             const sf::Color& getPixelColor(int x, int y);
             void brushStroke(const Input& input);
             void eraseStroke(const Input& input);
+            void bucketStroke(const Input& input);
 
             void clearCanvas();
 
