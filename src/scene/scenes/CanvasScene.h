@@ -43,6 +43,12 @@ namespace sk {
             void setPixelColor(int x, int y, sf::Color color);
             void togglePixelOutlines();
             void rebuildCanvas();
+            const sf::Color& getPixelColor(int x, int y);
+            void brushStroke(const Input& input);
+            void eraseStroke(const Input& input);
+
+            void clearCanvas();
+
 
         public:
             CanvasScene(sk::Window& window);

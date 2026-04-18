@@ -1,4 +1,5 @@
 #include "CanvasScene.h"
+#include "CanvasTools/ToolType.h"
 #include <memory>
 
 using namespace sk;
@@ -7,12 +8,22 @@ void CanvasScene::initButtons(sk::Window& window){
     mFont.loadFromFile("assets/arial/ARIAL.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
 
+    //Clear button
+    auto clearButton = std::make_unique<sk::Button>();
+    clearButton->init("Clear", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    clearButton->setPosition({10, (float)(windowSize.y * 0.1f)});
+    clearButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    clearButton->onClick = [this](){ clearCanvas(); };
+    addGUIElement(std::move(clearButton));
+
     //Brush button
     auto brushButton = std::make_unique<sk::Button>();
     brushButton->init("Brush", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
     brushButton->setPosition({10, (float)(windowSize.y * 0.3f)});
     brushButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    brushButton->onClick = [](){ std::cout << "Brush Selected" << '\n'; };
+    brushButton->onClick = [this](){ 
+        mTool.setType(ToolType::BRUSH); 
+     };
     addGUIElement(std::move(brushButton));
 
     //Eraser button
@@ -20,7 +31,10 @@ void CanvasScene::initButtons(sk::Window& window){
     eraserButton->init("Eraser", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
     eraserButton->setPosition({10, (float)(windowSize.y * 0.3f) + 60});
     eraserButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    eraserButton->onClick = [](){ std::cout << "Eraser Selected" << '\n'; };
+    eraserButton->onClick = [this](){
+        mTool.setType(ToolType::ERASE);
+        std::cout << "ERASE" << '\n';
+    };
     addGUIElement(std::move(eraserButton));
 
     //Bucket button
@@ -91,6 +105,16 @@ void CanvasScene::rebuildCanvas(){
 
 }
 
+void CanvasScene::clearCanvas(){
+    for(int y = 0; y < CANVAS_SIZE; ++y){
+        for(int x = 0; x < CANVAS_SIZE; ++x){
+            mCanvas[x][y] = sf::Color::White;
+        }
+    }
+
+    rebuildCanvas();
+}
+
 void CanvasScene::initCanvas(sk::Window& window){
     
     float totalSize = CANVAS_SIZE * (mGridPixelSize + mGridPixelOutlineSize);
@@ -102,16 +126,7 @@ void CanvasScene::initCanvas(sk::Window& window){
 
     mCanvasPos = {startX, startY};
 
-    for(int y = 0; y < CANVAS_SIZE; ++y){
-        for(int x = 0; x < CANVAS_SIZE; ++x){
-            mCanvas[x][y] = sf::Color::White;
-    
-        }
-    }
-
-
-    rebuildCanvas();
-
+    clearCanvas();
 
 }
 
@@ -124,6 +139,11 @@ void CanvasScene::setPixelColor(int x, int y, sf::Color color){
     }
 }
 
+
+const sf::Color& CanvasScene::getPixelColor(int x, int y){
+    return mCanvas[x][y];
+}
+
 CanvasScene::CanvasScene(sk::Window& window)
 : mTool(mGridPixelSize, mGridPixelOutlineSize){
     initButtons(window);
@@ -132,8 +152,49 @@ CanvasScene::CanvasScene(sk::Window& window)
     mTool.setGridOffset(mCanvasPos);
 }
 
+void CanvasScene::brushStroke(const Input& input){
+
+    if(input.mouseButton1Pressed || input.mouseButton1Clicked){
+        int x = mTool.getMouseGridPosition().x;
+        int y = mTool.getMouseGridPosition().y;
+
+        if(getPixelColor(x, y) != mTool.getColorSelected()){
+            setPixelColor(x, y, mTool.getColorSelected());
+        }
+
+    }
+}
+
+void CanvasScene::eraseStroke(const Input& input){
+    if(input.mouseButton1Pressed || input.mouseButton1Clicked){
+        int x = mTool.getMouseGridPosition().x;
+        int y = mTool.getMouseGridPosition().y;
+
+        setPixelColor(x, y, sf::Color::White);
+
+    }
+    
+}
+
 void CanvasScene::update(const Input& input){ 
     mTool.update(input);
+    
+    // check for mouse clicks, then paint canvas
+    if(!mTool.getOutOfBounds()){
+        switch (mTool.getToolType()) {
+            case BRUSH:
+                brushStroke(input);
+                break;
+            case ERASE:
+                eraseStroke(input);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
     Scene::update(input);
 }
 

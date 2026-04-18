@@ -7,9 +7,9 @@ Tool::Tool(const float& gridPixelSize,const float& gridPixelOutlineSize)
     mGridPixelSize(gridPixelSize)
 {
     mToolOutline.setOutlineThickness(gridPixelOutlineSize);
-    mToolOutline.setOutlineColor(sf::Color::Transparent);
+    mToolOutline.setFillColor(sf::Color::Transparent);
     mToolOutline.setSize({gridPixelSize, gridPixelSize});
-    mToolOutline.setOutlineColor(sf::Color::Red);
+    mToolOutline.setOutlineColor(mColorSelected);
      
 }
 
@@ -19,6 +19,9 @@ void Tool::setGridOffset(sf::Vector2f off){
 
 void Tool::setType(ToolType type){
     mToolType = type;
+}
+const ToolType& Tool::getToolType() {
+    return mToolType;
 }
 
 
@@ -47,7 +50,19 @@ void Tool::update(const Input& input){
 
 
 }
+const sf::Vector2u& Tool::getMouseGridPosition()
+{
+    return mMouseGridPosition;
+}
 
+const sf::Color& Tool::getColorSelected()
+{
+    return mColorSelected;
+}
+
+const bool& Tool::getOutOfBounds(){
+    return mOutOfBounds;
+}
 void Tool::draw(sk::Window& window){
     if(!mOutOfBounds) window.getRenderWindow()->draw(mToolOutline);
 }

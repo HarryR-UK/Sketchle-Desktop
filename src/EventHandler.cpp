@@ -17,6 +17,7 @@ void EventHandler::pollEvents(sk::Window& window){
         switch (mEvent.type) {
             case sf::Event::Closed:
                 window.close();
+                break;
             default:
                 break;
         }
