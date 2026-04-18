@@ -10,6 +10,7 @@
 #include "../../gui/Button.h"
 #include "CanvasTools/Tool.h"
 #include <array>
+#include <vector>
 #include"../../global.h"
 
 #define QUAD_POINT_COUNT 4
@@ -37,9 +38,25 @@ namespace sk {
 
             bool mShowPixelOutlines = true;
 
+            std::vector<sf::Color> mColorPalette = {
+                sf::Color::Black,
+                sf::Color::White,
+                sf::Color::Red,
+                sf::Color::Green,
+                sf::Color::Blue,
+                sf::Color::Yellow,
+                sf::Color(255, 165, 0), // orange
+                sf::Color(128, 0, 128),  // purple
+                sf::Color(139,69,19) // brown
+            };
+
+
+            sk::Button* mSelectedColorIcon;
+
         private:
             void initButtons(sk::Window& window);
             void initCanvas(sk::Window& window);
+            void initColorPalette(sk::Window& window);
             void setPixelColor(int x, int y, sf::Color color);
             void togglePixelOutlines();
             void rebuildCanvas();

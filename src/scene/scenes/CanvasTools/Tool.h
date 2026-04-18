@@ -36,6 +36,7 @@ namespace sk {
             void setGridOffset(sf::Vector2f off);
             void setPixelOutlineThickness(const float& t);
             void setType(ToolType type);
+            void setPixelColor(const sf::Color& color);
 
             const sf::Color& getColorSelected();;
             const sf::Vector2u& getMouseGridPosition();

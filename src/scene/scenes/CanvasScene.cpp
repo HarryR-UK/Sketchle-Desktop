@@ -64,6 +64,74 @@ void CanvasScene::initButtons(sk::Window& window){
     addGUIElement(std::move(submitButton));
 }
 
+void CanvasScene::initColorPalette(sk::Window& window){
+    const int size = 30.f;
+    const float startX = 15.f;
+    const float startY = window.getWindowSize().y * 0.7f;
+    const float spacing = 3.f;
+
+    // current selected 
+    auto selectedColorIcon = std::make_unique<sk::Button>();
+
+    selectedColorIcon->init(
+        "",
+        {size * 1.5f, size * 1.5f},
+        mTool.getColorSelected(),
+        sf::Color::White,
+        mFont,
+        0
+    );
+
+    selectedColorIcon->setPosition({
+        window.getWindowSize().x * 0.95f,
+        window.getWindowSize().y * 0.05f
+    });
+
+    selectedColorIcon->setBtnOutlineColor(sf::Color::White);
+    selectedColorIcon->setBtnOutlineThickness(3);
+
+    mSelectedColorIcon = selectedColorIcon.get();
+
+    addGUIElement(std::move(selectedColorIcon));
+
+    for(int i = 0; i < mColorPalette.size(); ++i){
+        auto colorBtn = std::make_unique<sk::Button>();
+
+
+        sf::Color color = mColorPalette[i];
+
+        colorBtn->init("", {size,size}, color, sf::Color::Transparent, mFont, 0);
+        colorBtn->setBtnHoverColor({
+                static_cast<sf::Uint8>(color.r * 0.6f),
+                static_cast<sf::Uint8>(color.g * 0.6f),
+                static_cast<sf::Uint8>(color.b * 0.6f)
+        });
+
+        int row = i / 4;
+        int col = i % 4;
+
+        colorBtn->setPosition({
+            startX + col * (size + spacing),
+            startY + row * (size + spacing)
+        });
+
+        colorBtn->onClick =[this, color](){
+            mTool.setPixelColor(color); 
+
+            if(mSelectedColorIcon) mSelectedColorIcon->setBtnFillColor(color);
+            
+        };
+
+        addGUIElement(std::move(colorBtn));
+
+
+
+    }
+
+
+
+}
+
 void CanvasScene::togglePixelOutlines(){
     mShowPixelOutlines = !mShowPixelOutlines;
     if(mShowPixelOutlines)
@@ -147,6 +215,7 @@ const sf::Color& CanvasScene::getPixelColor(int x, int y){
 CanvasScene::CanvasScene(sk::Window& window)
 : mTool(mGridPixelSize, mGridPixelOutlineSize){
     initButtons(window);
+    initColorPalette(window);
     initCanvas(window);
 
     mTool.setGridOffset(mCanvasPos);

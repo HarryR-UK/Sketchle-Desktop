@@ -60,6 +60,11 @@ const sf::Color& Tool::getColorSelected()
     return mColorSelected;
 }
 
+
+void Tool::setPixelColor(const sf::Color& color){
+    mColorSelected = color;
+}
+
 const bool& Tool::getOutOfBounds(){
     return mOutOfBounds;
 }
