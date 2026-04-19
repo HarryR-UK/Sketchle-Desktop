@@ -17,7 +17,7 @@ namespace sk {
 
         public:
             virtual void draw(sk::Window& window);
-            virtual void update(const Input& input);
+            virtual void update(const Input& input, sk::Window& window);
             void addGUIElement(std::unique_ptr<GUIElement> e);
 
             Scene();

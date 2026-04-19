@@ -63,6 +63,7 @@ bool Window::hasFocus(){
     return mRenderWindow.hasFocus();
 }
 sf::Vector2f Window::mapPixeltoCoords(sf::Vector2i mouseWindowPos){
+    mRenderWindow.setView(mWorldView);
     return mRenderWindow.mapPixelToCoords(mouseWindowPos);
 }
 
@@ -84,6 +85,8 @@ void Window::setWindowSize(const sf::Vector2u& size){
 
 }
 
+sf::View& Window::getWorldView(){ return mWorldView; }
+sf::View& Window::getGUIView() { return mGUIView; }
 
 void Window::changeToWorldView(){
     mRenderWindow.setView(mWorldView);
@@ -92,4 +95,10 @@ void Window::changeToWorldView(){
 
 void Window::changeToGUIView(){
     mRenderWindow.setView(mGUIView);
+}
+
+
+void Window::moveCamera(sf::Vector2f pos){
+    mWorldView.move(pos);
+    mRenderWindow.setView(mWorldView);
 }

@@ -20,8 +20,7 @@ void EventHandler::pollEvents(sk::Window& window, Input& input){
                 window.close();
                 break;
             case sf::Event::TextEntered:
-                input.lastCharTyped = mEvent.text.unicode;
-                
+                input.lastCharTyped = mEvent.text.unicode; 
                 break;
             default:
                 break;

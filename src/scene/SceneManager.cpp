@@ -11,6 +11,6 @@ void SceneManager::draw(sk::Window& window){
 
 }
 
-void SceneManager::update(const Input& input){
-    if(mCurrentScene) mCurrentScene->update(input);
+void SceneManager::update(const Input& input, sk::Window& window){
+    if(mCurrentScene) mCurrentScene->update(input, window);
 }

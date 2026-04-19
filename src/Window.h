@@ -59,6 +59,11 @@ namespace sk {
 
             void changeToWorldView();
             void changeToGUIView();
+            sf::View& getWorldView();
+            sf::View& getGUIView();
+
+            void moveCamera(sf::Vector2f pos);
+        
 
     };
 

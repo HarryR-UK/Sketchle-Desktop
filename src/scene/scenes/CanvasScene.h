@@ -54,6 +54,10 @@ namespace sk {
 
             sk::Button* mSelectedColorIcon;
 
+            bool mIsPanning = false;
+            sf::Vector2i mLastMousePos = {0,0};
+
+    
         private:
             void initButtons(sk::Window& window);
             void initCanvas(sk::Window& window);
@@ -68,11 +72,13 @@ namespace sk {
 
             void clearCanvas();
 
+            void cameraPan(const Input& input, sk::Window& window);
+
 
         public:
             CanvasScene(sk::Window& window);
             ~CanvasScene();
-            void update(const Input& input) override;
+            void update(const Input& input, sk::Window& window) override;
             void draw(sk::Window& window) override;
     };
 

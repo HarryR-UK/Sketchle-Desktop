@@ -1,5 +1,9 @@
+//
+// Author: Harry Rotheram
+
 #include "CanvasScene.h"
 #include "CanvasTools/ToolType.h"
+#include "SFML/System/Vector2.hpp"
 #include <memory>
 
 using namespace sk;
@@ -286,7 +290,7 @@ void CanvasScene::bucketStroke(const Input& input){
 
 }
 
-void CanvasScene::update(const Input& input){ 
+void CanvasScene::update(const Input& input, sk::Window& window){ 
     mTool.update(input);
     
     // check for mouse clicks, then paint canvas
@@ -308,8 +312,35 @@ void CanvasScene::update(const Input& input){
     }
 
 
-    Scene::update(input);
+    cameraPan(input, window);
+
+    Scene::update(input, window);
 }
+
+void CanvasScene::cameraPan(const Input& input, sk::Window& window){
+    if(input.mouseButton2Clicked){
+        mIsPanning = true;
+        mLastMousePos = input.mousePositionWindow;
+    }
+
+    if(!input.mouseButton2Pressed){
+        mIsPanning = false;
+        return;
+    }
+
+    
+    if(mIsPanning){
+        sf::Vector2i currMousePos = input.mousePositionWindow;
+        // delta (difference between the last and curr mouse pos)
+        sf::Vector2f d = window.mapPixeltoCoords(mLastMousePos) - window.mapPixeltoCoords(currMousePos);
+    
+        window.moveCamera(d);
+
+        mLastMousePos = currMousePos;
+    
+    }
+}
+
 
 
 

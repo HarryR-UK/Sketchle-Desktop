@@ -22,7 +22,7 @@ namespace sk {
                 mCurrentScene = std::make_unique<T>(std::forward<Args>(args)...);
             }
 
-            void update(const Input& input);
+            void update(const Input& input, sk::Window& window);
 
             void draw(sk::Window& window);
 

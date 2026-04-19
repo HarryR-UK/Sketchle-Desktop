@@ -12,7 +12,7 @@ Scene::Scene(){}
 Scene::~Scene(){
 }
 
-void Scene::update(const Input& input){
+void Scene::update(const Input& input, sk::Window& window){
     for(auto& e : mGUIElements){
         e->update(input);
     }
