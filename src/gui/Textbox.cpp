@@ -133,6 +133,7 @@ void Textbox::update(const Input& input){
     }    
 }
 
+
 void Textbox::inputLogic(int charTyped){
     if(mUserInput.size() <= 12) { // 12 character limit
         mUserInput += static_cast<char>(charTyped);
