@@ -23,7 +23,8 @@ namespace sk {
             sf::ContextSettings mContextSettings;
             sf::VideoMode mVideoMode;
 
-            sf::View mView;
+            sf::View mWorldView;
+            sf::View mGUIView;
             
             veci mWindowSize;
 
@@ -55,6 +56,9 @@ namespace sk {
             sf::Vector2f mapPixeltoCoords(sf::Vector2i mouseWindowPos);
 
             bool hasFocus();
+
+            void changeToWorldView();
+            void changeToGUIView();
 
     };
 

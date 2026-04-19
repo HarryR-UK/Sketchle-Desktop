@@ -57,7 +57,7 @@ void CanvasScene::initButtons(sk::Window& window){
     //Submit button
     auto submitButton = std::make_unique<sk::Button>();
     submitButton->init("Submit", {120, 50}, sf::Color(100, 200, 100), sf::Color::White, mFont, 20);
-    submitButton->setPosition({(float)(windowSize.x * 0.5f) - 60, (float)(windowSize.y - 70)});
+    submitButton->setPosition({(float)(windowSize.x * 0.9f) - 60, (float)(windowSize.y * 0.9)});
     submitButton->setBtnHoverColor(sf::Color(70, 170, 70));
     submitButton->onClick = [](){ std::cout << "Drawing Submitted" << '\n'; };
     addGUIElement(std::move(submitButton));
@@ -314,9 +314,12 @@ void CanvasScene::update(const Input& input){
 
 
 void CanvasScene::draw(sk::Window& window){
+    window.changeToWorldView();
     window.getRenderWindow()->draw(mCanvasBuffer);
 
     mTool.draw(window);
+
+    window.changeToGUIView();
     Scene::draw(window);
 }
 

@@ -23,8 +23,10 @@ Window::Window(const int& windowH, const int& windowW, const int& antiAlias){
     mRenderWindow.create(mVideoMode, "Sketchle", sf::Style::Close, mContextSettings);
 
 
-    mView.reset(sf::FloatRect(0,0, windowW, windowH));
-    mRenderWindow.setView(mView);
+    mWorldView.reset(sf::FloatRect(0,0, windowW, windowH));
+    mGUIView = mWorldView;
+
+    mRenderWindow.setView(mWorldView);
 
     mRenderWindow.setVerticalSyncEnabled(true);
 
@@ -74,9 +76,20 @@ sf::Vector2u Window::getMonitorResolution(){
 void Window::setWindowSize(const sf::Vector2u& size){
     mRenderWindow.setSize(size);
 
-    mView.reset(sf::FloatRect(0,0, size.x, size.y));
-    mRenderWindow.setView(mView);
+    mWorldView.reset(sf::FloatRect(0,0, size.x, size.y));
+    mGUIView = mWorldView;
+    mRenderWindow.setView(mWorldView);
 
     mWindowSize = {(int) size.x, (int) size.y};
 
+}
+
+
+void Window::changeToWorldView(){
+    mRenderWindow.setView(mWorldView);
+}
+
+
+void Window::changeToGUIView(){
+    mRenderWindow.setView(mGUIView);
 }

@@ -21,6 +21,7 @@ Application::~Application(){
 
 void Application::render(){
     mWindow.clear();
+    mWindow.changeToWorldView();
 
     mSceneManager.draw(mWindow);
 
@@ -29,7 +30,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<MainMenuScene>(mWindow);
+    mSceneManager.changeScene<CanvasScene>(mWindow);
 
     while(mWindow.getIsWindowOpen()){
         // poll events
