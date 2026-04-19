@@ -19,7 +19,7 @@ namespace sk {
     class Window{
 
         private:
-            sf::RenderWindow* mRenderWindow = nullptr;
+            sf::RenderWindow mRenderWindow;
             sf::ContextSettings mContextSettings;
             sf::VideoMode mVideoMode;
 
@@ -51,6 +51,10 @@ namespace sk {
             const veci& getWindowSize();
             sf::Vector2u getMonitorResolution();
             void setWindowSize(const sf::Vector2u& size);
+
+            sf::Vector2f mapPixeltoCoords(sf::Vector2i mouseWindowPos);
+
+            bool hasFocus();
 
     };
 

@@ -9,23 +9,23 @@
 
 using namespace sk;
 
-
 MainMenuScene::MainMenuScene(sk::Window& window){
     mFont.loadFromFile("assets/arial/ARIAl.TTF");
-    auto mTestButton = std::make_unique<sk::Button>();
     sf::Vector2i windowSize = window.getWindowSize();
 
-    mTestButton->init("TESTES", {100,100}, sf::Color::Red, {0,0,0}, mFont, 26);
-    mTestButton->setPosition({(float)(windowSize.x * 0.5f),(float)(windowSize.y * 0.5f)});
+    //Title
+    auto titleText = std::make_unique<sk::Button>();
+    titleText->init("SKETCHLE", {400, 80}, sf::Color(0,0,0,0), sf::Color(180, 100, 255), mFont, 48);
+    titleText->setPosition({(float)(windowSize.x * 0.5f) - 200, (float)(windowSize.y * 0.2f)});
+    addGUIElement(std::move(titleText));
 
-    mTestButton->setBtnHoverColor(sf::Color::Red);
-    mTestButton->setTxtHoverColor(sf::Color::Yellow);
-
-    mTestButton->onClick = [](){
-        std::cout << "Button Clicked" << '\n';
-    };
-
-    addGUIElement(std::move(mTestButton));
+    //Login button
+    auto loginButton = std::make_unique<sk::Button>();
+    loginButton->init("Login", {200, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 24);
+    loginButton->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.5f)});
+    loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    loginButton->onClick = [](){ std::cout << "Login Clicked" << '\n'; };
+    addGUIElement(std::move(loginButton));
     
     
     // username textbox
@@ -70,4 +70,3 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     
     addGUIElement(std::move(mPwordTextbox));   
 }
-
