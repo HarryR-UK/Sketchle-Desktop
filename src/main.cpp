@@ -12,10 +12,12 @@
 int main(void)
 {
 
-    sk::Application app;
-    app.run();
+    //sk::Application app;
+    //app.run();
     
-    //sk::NetworkClient net;
+    sk::NetworkClient net;
+
+    std::cout << net.attemptLogin("darren123", "HelloDarren123*") << '\n';
 
 
     return EXIT_SUCCESS;
