@@ -23,6 +23,8 @@ namespace sk {
             }
 
             void update(const Input& input, sk::Window& window);
+            
+            void update(const Input& input, sk::Window& window, float dt, float elapsed);
 
             void draw(sk::Window& window);
 

@@ -6,6 +6,7 @@
 #define INPUT_H
 
 #include "Window.h"
+#include "Clock.h"
 #include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
 

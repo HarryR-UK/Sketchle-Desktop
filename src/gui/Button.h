@@ -40,8 +40,8 @@ namespace sk {
             Button(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize);
 
             void init(const std::string& txt, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Color& txtColor, const sf::Font& font, const int& fontSize);;
-            
-            void init(const sf::Image& image, const sf::Vector2f& size);
+                    
+            void init(const sf::Image& image, const sf::Vector2f& size); // button with image
 
             void setBtnHoverColor(const sf::Color& c);
             void setTxtHoverColor(const sf::Color& c);

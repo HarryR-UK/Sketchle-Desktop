@@ -28,6 +28,8 @@ void Input::update(sk::Window& window){
     }
 
     
+
+    
 }
 
 void Input::resetFrame(){

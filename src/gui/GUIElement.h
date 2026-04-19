@@ -21,6 +21,9 @@ namespace sk {
         public:
             virtual ~GUIElement()= default;
             virtual void update(const Input& input);
+            virtual void update(const Input& input, float dt, float elapsed){
+                update(input);
+            }
             virtual void draw(sk::Window& window);
             
 
