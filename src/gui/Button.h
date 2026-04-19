@@ -29,6 +29,7 @@ namespace sk {
             sf::Texture mTexture;
             sf::Sprite mSprite;
             bool mUseImage = false;
+            bool mHoverEnabled = true;
            
 
         private:
@@ -50,6 +51,7 @@ namespace sk {
             void setBtnOutlineColor(const sf::Color& c);
             void setPosition(const sf::Vector2f& pos);
             void setBtnOutlineThickness(const int& t);
+            void setImage(const sf::Image& image);
 
             void draw(sk::Window& window) override;
 
@@ -59,6 +61,7 @@ namespace sk {
 
             void mouseHovered();
             void mouseNotHovered();
+            void setHoverEnabled(bool hoverEnabled);
             
             sf::Vector2f getButtonSize();
             

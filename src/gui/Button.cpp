@@ -45,12 +45,15 @@ void Button::init(const sf::Image& image, const sf::Vector2f& size){
     
     mSprite.setScale(size.x / imgSize.x, size.y / imgSize.y);
     
+    mButtonShape.setSize(size);
+    mButtonShape.setFillColor(sf::Color::Transparent);
     mButtonSize = size;
     mUseImage = true;
 }
 
 void Button::setPosition(const sf::Vector2f& pos){   
     mPosition = sf::Vector2f(pos);
+    mButtonShape.setPosition(pos);
     
     if(mUseImage){
         mSprite.setPosition(pos);
@@ -74,7 +77,12 @@ void Button::setTxtHoverColor(const sf::Color& c){
     mTextHoverColor = c;
 }
 
+void Button::setHoverEnabled(bool hoverEnabled){
+    mHoverEnabled = hoverEnabled;
+}
+
 void Button::mouseHovered(){
+    if(!mHoverEnabled) return;
     if(mUseImage){
         mSprite.setColor(sf::Color(200,200,200));
     }else{
@@ -85,8 +93,8 @@ void Button::mouseHovered(){
 }
 
 void Button::mouseNotHovered(){
-    if(mButtonShape.getFillColor() == mBtnColor && mText.getFillColor() == mTextColor) return; 
-    
+    if(!mHoverEnabled) return;
+    if(mButtonShape.getFillColor() == mBtnColor && mText.getFillColor() == mTextColor) return;     
     if(mUseImage){
         mSprite.setColor(sf::Color::White);
     }else{
@@ -134,10 +142,18 @@ void Button::setBtnOutlineThickness(const int& t){
     mButtonShape.setOutlineThickness(t);
 }
 
+void Button::setImage(const sf::Image& image){
+    if(!mTexture.loadFromImage(image)){
+        std::cout << "Could not load image" << '\n';
+        return;
+    }
+    mSprite.setTexture(mTexture);
+}
 
 void Button::draw(sk::Window& window){
     // render all button elements here
     if(mUseImage){
+        window.getRenderWindow()->draw(mButtonShape);
         window.getRenderWindow()->draw(mSprite);
     }else{
         window.getRenderWindow()->draw(mButtonShape);

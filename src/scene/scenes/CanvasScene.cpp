@@ -1,5 +1,5 @@
 //
-// Author: Harry Rotheram
+// Author: Harry Rotheram and Finn O'Hare
 
 #include "CanvasScene.h"
 #include "CanvasTools/ToolType.h"
@@ -11,60 +11,90 @@ using namespace sk;
 void CanvasScene::initButtons(sk::Window& window){
     mFont.loadFromFile("assets/arial/ARIAL.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
-
+    sf::Image brushImage;
+    sf::Image eraserImage;
+    sf::Image bucketImage;
+    brushImage.loadFromFile("assets/brush.png");
+    eraserImage.loadFromFile("assets/eraser.png");
+    bucketImage.loadFromFile("assets/bucket.png");
+    
+    //Tool indicator
+    auto toolIndicator = std::make_unique<sk::Button>();
+    toolIndicator->init(brushImage, {45,45});
+    toolIndicator->setPosition({(float)(windowSize.x*0.95f), (float)(windowSize.y * 0.12f)});
+    toolIndicator->setBtnOutlineColor(sf::Color::White);
+    toolIndicator->setBtnOutlineThickness(3);
+    toolIndicator->setHoverEnabled(false);
+    auto* toolIndicatorPtr = toolIndicator.get(); 
+    addGUIElement(std::move(toolIndicator));
+    
     //Clear button
-    auto clearButton = std::make_unique<sk::Button>();
-    clearButton->init("Clear", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
-    clearButton->setPosition({10, (float)(windowSize.y * 0.1f)});
-    clearButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    auto clearButton = std::make_unique<sk::Button>();    
+    sf::Image clearImage;
+    if(!clearImage.loadFromFile("assets/clear.png")){
+        std::cout << "Could not load image" << '\n';
+    }    
+    clearButton->init(clearImage, {95,95});
+    clearButton->setPosition({10, (float)(windowSize.y * 0.1f)});    
     clearButton->onClick = [this](){ clearCanvas(); };
     addGUIElement(std::move(clearButton));
 
     //Brush button
-    auto brushButton = std::make_unique<sk::Button>();
-    brushButton->init("Brush", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
-    brushButton->setPosition({10, (float)(windowSize.y * 0.3f)});
-    brushButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    brushButton->onClick = [this](){ 
+    auto brushButton = std::make_unique<sk::Button>();    
+    brushButton->init(brushImage, {75,75});
+    brushButton->setPosition({10, (float)(windowSize.y * 0.3f)});    
+    brushButton->onClick = [this, toolIndicatorPtr, brushImage](){ 
         mTool.setType(ToolType::BRUSH); 
+        toolIndicatorPtr->setImage(brushImage);
      };
     addGUIElement(std::move(brushButton));
-
+    
     //Eraser button
-    auto eraserButton = std::make_unique<sk::Button>();
-    eraserButton->init("Eraser", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
-    eraserButton->setPosition({10, (float)(windowSize.y * 0.3f) + 60});
-    eraserButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    eraserButton->onClick = [this](){
-        mTool.setType(ToolType::ERASE);
-    };
+    auto eraserButton = std::make_unique<sk::Button>();     
+    eraserButton->init(eraserImage, {75,75});
+    eraserButton->setPosition({10, (float)(windowSize.y * 0.3f) + 75});    
+    eraserButton->onClick = [this, toolIndicatorPtr, eraserImage](){ 
+        mTool.setType(ToolType::ERASE); 
+        toolIndicatorPtr->setImage(eraserImage);
+     };
     addGUIElement(std::move(eraserButton));
-
+    
     //Bucket button
-    auto bucketButton = std::make_unique<sk::Button>();
-    bucketButton->init("Fill", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
-    bucketButton->setPosition({10, (float)(windowSize.y * 0.3f) + 120});
-    bucketButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    bucketButton->onClick = [this](){ mTool.setType(ToolType::BUCKET); };
+    auto bucketButton = std::make_unique<sk::Button>();     
+    bucketButton->init(bucketImage, {75,75});
+    bucketButton->setPosition({10, (float)(windowSize.y * 0.3f) + 150});    
+    bucketButton->onClick = [this, toolIndicatorPtr, bucketImage](){ 
+        mTool.setType(ToolType::BUCKET); 
+        toolIndicatorPtr->setImage(bucketImage);
+     };
     addGUIElement(std::move(bucketButton));
     
-    //Share button
-    auto toggleOutlineButton = std::make_unique<sk::Button>();
-    toggleOutlineButton->init("Outline", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
-    toggleOutlineButton->setPosition({10, (float)(windowSize.y * 0.3f) + 180});
-    toggleOutlineButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    toggleOutlineButton->onClick = [this](){
+    //Grid button
+    auto gridButton = std::make_unique<sk::Button>();    
+    sf::Image gridImage;
+    if(!gridImage.loadFromFile("assets/grid.png")){
+        std::cout << "Could not load image" << '\n';
+    }    
+    gridButton->init(gridImage, {75,75});
+    gridButton->setPosition({10, (float)(windowSize.y * 0.3f) + 225});    
+    gridButton->onClick = [this](){
         togglePixelOutlines();
     };
-    addGUIElement(std::move(toggleOutlineButton));
-    
+    addGUIElement(std::move(gridButton));
+        
     //Submit button
-    auto submitButton = std::make_unique<sk::Button>();
-    submitButton->init("Submit", {120, 50}, sf::Color(100, 200, 100), sf::Color::White, mFont, 20);
-    submitButton->setPosition({(float)(windowSize.x * 0.9f) - 60, (float)(windowSize.y * 0.9)});
-    submitButton->setBtnHoverColor(sf::Color(70, 170, 70));
+    auto submitButton = std::make_unique<sk::Button>();    
+    sf::Image submitImage;
+    if(!submitImage.loadFromFile("assets/submit.png")){
+        std::cout << "Could not load image" << '\n';
+    }    
+    submitButton->init(submitImage, {100,100});
+    submitButton->setPosition({(float)(windowSize.x * 0.95f) - 60, (float)(windowSize.y * 0.85f)}); 
+    submitButton->setBtnOutlineColor(sf::Color(104,98,108));
+    submitButton->setBtnOutlineThickness(10);    
     submitButton->onClick = [](){ std::cout << "Drawing Submitted" << '\n'; };
-    addGUIElement(std::move(submitButton));
+    addGUIElement(std::move(submitButton));    
+       
 }
 
 void CanvasScene::initColorPalette(sk::Window& window){
@@ -73,7 +103,7 @@ void CanvasScene::initColorPalette(sk::Window& window){
     const float startY = window.getWindowSize().y * 0.7f;
     const float spacing = 3.f;
 
-    // current selected 
+    // Currently selected colour
     auto selectedColorIcon = std::make_unique<sk::Button>();
 
     selectedColorIcon->init(
@@ -122,6 +152,7 @@ void CanvasScene::initColorPalette(sk::Window& window){
             mTool.setPixelColor(color); 
 
             if(mSelectedColorIcon) mSelectedColorIcon->setBtnFillColor(color);
+            if(mSelectedColorIcon) mSelectedColorIcon->setBtnHoverColor(color);
             
         };
 

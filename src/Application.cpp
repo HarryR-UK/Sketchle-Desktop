@@ -21,7 +21,7 @@ Application::~Application(){
 }
 
 void Application::render(){
-    mWindow.clear();
+    mWindow.clear(sf::Color(100,100,100));
     mWindow.changeToWorldView();
 
     mSceneManager.draw(mWindow);
@@ -31,7 +31,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<MainMenuScene>(mWindow);
+    mSceneManager.changeScene<CanvasScene>(mWindow);
     
     sk::Clock clock;
 
