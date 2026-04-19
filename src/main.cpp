@@ -17,7 +17,7 @@ int main(void)
     
     sk::NetworkClient net;
 
-    std::cout << net.attemptLogin("darren123", "HelloDarren123*") << '\n';
+    net.attemptLogin("darren123", "HelloDarren123*");
 
 
     return EXIT_SUCCESS;
