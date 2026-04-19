@@ -313,8 +313,17 @@ void CanvasScene::update(const Input& input, sk::Window& window){
 
 
     cameraPan(input, window);
+    cameraZoom(input, window);
 
     Scene::update(input, window);
+}
+
+void CanvasScene::cameraZoom(const Input& input, sk::Window& window){
+    if(input.scrollWheelChange != 0.f){
+        float zFactor = std::pow(1.1f, -input.scrollWheelChange);
+        if(zFactor)
+        window.zoomCamera(zFactor);
+    }
 }
 
 void CanvasScene::cameraPan(const Input& input, sk::Window& window){

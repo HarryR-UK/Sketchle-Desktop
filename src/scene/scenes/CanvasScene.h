@@ -73,6 +73,7 @@ namespace sk {
             void clearCanvas();
 
             void cameraPan(const Input& input, sk::Window& window);
+            void cameraZoom(const Input& input, sk::Window& window);
 
 
         public:

@@ -63,6 +63,7 @@ namespace sk {
             sf::View& getGUIView();
 
             void moveCamera(sf::Vector2f pos);
+            void zoomCamera(float z);
         
 
     };

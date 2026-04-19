@@ -102,3 +102,8 @@ void Window::moveCamera(sf::Vector2f pos){
     mWorldView.move(pos);
     mRenderWindow.setView(mWorldView);
 }
+
+void Window::zoomCamera(float z){
+    mWorldView.zoom(z);
+    mRenderWindow.setView(mWorldView);
+}
