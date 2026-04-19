@@ -1,5 +1,5 @@
 //
-// Author: Harry Rotheram
+// Author: Harry Rotheram and Finn O'Hare
 //
 //
 #include "Button.h"
