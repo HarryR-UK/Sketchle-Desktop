@@ -3,7 +3,6 @@
 //
 //
 #include "Application.h"
-#include "Clock.h"
 #include "scene/scenes/CanvasScene.h"
 #include "scene/scenes/MainMenuScene.h"
 #include <cmath>
@@ -31,22 +30,15 @@ void Application::render(){
 
 void Application::run(){
     mSceneManager.changeScene<MainMenuScene>(mWindow);
-    
-    sk::Clock clock;
 
     while(mWindow.getIsWindowOpen()){
-        // start clock
-        clock.update();
-        float dt = clock.getDeltaTime();
-        float elapsed = clock.getElapsedTime();
-        
         // poll events
         mEventHandler.pollEvents(mWindow, mInput);
-                               
+
         // update
         mInput.update(mWindow);
 
-        mSceneManager.update(mInput, dt, elapsed);
+        mSceneManager.update(mInput);
 
 
         

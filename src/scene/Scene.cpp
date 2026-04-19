@@ -18,12 +18,6 @@ void Scene::update(const Input& input){
     }
 }
 
-void Scene::update(const Input& input, float dt, float elapsed){
-    for(auto& e : mGUIElements){
-        e->update(input, dt, elapsed);
-    }
-}
-
 void Scene::draw(sk::Window& window){
     for(auto& e : mGUIElements){
         e->draw(window);

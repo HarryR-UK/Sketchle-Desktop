@@ -24,8 +24,6 @@ namespace sk {
             
             bool mIsSelected = false;
             bool mKeyHeld = false;
-            bool mShowCursor = true;
-            float mCursorTimer = 0.f;            
             
             std::string mUserInput = "";
             std::string mPlaceholder = "";
@@ -45,8 +43,6 @@ namespace sk {
             const sf::Vector2f& getPosition();
 
             void update(const Input& input) override;
-            
-            void update(const Input& input, float dt, float elapsed);
 
             void mouseHovered();
             void mouseNotHovered();

@@ -34,7 +34,5 @@ void Input::update(sk::Window& window){
     //std::cout << lastCharTyped << '\n';
     //std::cout << keyHeld << '\n';
     
-
-    
 }
 
