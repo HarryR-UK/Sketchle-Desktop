@@ -91,6 +91,21 @@ void Button::update(const Input& input){
 
 
 
+void Button::setBtnFillColor(const sf::Color& c){
+    mButtonShape.setFillColor(c);
+    mBtnColor = c;
+}
+void Button::setTxtFillFolor(const sf::Color& c){
+    mText.setFillColor(c);
+    mTextColor = c;
+}
+void Button::setBtnOutlineColor(const sf::Color& c){
+    mButtonShape.setOutlineColor(c);
+}
+
+void Button::setBtnOutlineThickness(const int& t){
+    mButtonShape.setOutlineThickness(t);
+}
 
 
 void Button::draw(sk::Window& window){

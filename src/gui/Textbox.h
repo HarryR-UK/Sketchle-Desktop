@@ -43,6 +43,8 @@ namespace sk {
             const sf::Vector2f& getPosition();
 
             void update(const Input& input) override;
+            
+            void update(const Input& input, float dt, float elapsed) override;
 
             void mouseHovered();
             void mouseNotHovered();

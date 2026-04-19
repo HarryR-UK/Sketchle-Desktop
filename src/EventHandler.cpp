@@ -22,7 +22,6 @@ void EventHandler::pollEvents(sk::Window& window, Input& input){
             case sf::Event::TextEntered:
                 input.lastCharTyped = mEvent.text.unicode;
                 
-                //std::cout << input.lastCharTyped << '\n';
                 break;
             default:
                 break;

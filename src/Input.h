@@ -13,6 +13,7 @@ namespace sk {
     struct Input{
         sf::Vector2i mousePositionScreen;
         sf::Vector2i mousePositionWindow;
+        sf::Vector2f mousePositionView;
         bool mouseButton1Pressed = false;
         bool mouseButton2Pressed = false;
         bool mouseButton1Clicked = false;

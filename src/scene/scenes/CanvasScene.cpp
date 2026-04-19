@@ -1,40 +1,322 @@
 #include "CanvasScene.h"
+#include "CanvasTools/ToolType.h"
 #include <memory>
 
 using namespace sk;
 
 void CanvasScene::initButtons(sk::Window& window){
     mFont.loadFromFile("assets/arial/ARIAL.TTF");
-    std::unique_ptr<sk::Button> testButton = std::make_unique<sk::Button>();
-    testButton->init("Test", {20,20}, sf::Color::White, sf::Color::Black, mFont, 24);
+    sf::Vector2i windowSize = window.getWindowSize();
 
-    testButton->setPosition({0,(float)window.getWindowSize().y - 20});
+    //Clear button
+    auto clearButton = std::make_unique<sk::Button>();
+    clearButton->init("Clear", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    clearButton->setPosition({10, (float)(windowSize.y * 0.1f)});
+    clearButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    clearButton->onClick = [this](){ clearCanvas(); };
+    addGUIElement(std::move(clearButton));
 
-    testButton->setBtnHoverColor(sf::Color::Red);
-    testButton->setTxtHoverColor(sf::Color::White);
+    //Brush button
+    auto brushButton = std::make_unique<sk::Button>();
+    brushButton->init("Brush", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    brushButton->setPosition({10, (float)(windowSize.y * 0.3f)});
+    brushButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    brushButton->onClick = [this](){ 
+        mTool.setType(ToolType::BRUSH); 
+     };
+    addGUIElement(std::move(brushButton));
+
+    //Eraser button
+    auto eraserButton = std::make_unique<sk::Button>();
+    eraserButton->init("Eraser", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    eraserButton->setPosition({10, (float)(windowSize.y * 0.3f) + 60});
+    eraserButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    eraserButton->onClick = [this](){
+        mTool.setType(ToolType::ERASE);
+    };
+    addGUIElement(std::move(eraserButton));
+
+    //Bucket button
+    auto bucketButton = std::make_unique<sk::Button>();
+    bucketButton->init("Fill", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    bucketButton->setPosition({10, (float)(windowSize.y * 0.3f) + 120});
+    bucketButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    bucketButton->onClick = [this](){ mTool.setType(ToolType::BUCKET); };
+    addGUIElement(std::move(bucketButton));
+    
+    //Share button
+    auto toggleOutlineButton = std::make_unique<sk::Button>();
+    toggleOutlineButton->init("Outline", {80, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 16);
+    toggleOutlineButton->setPosition({10, (float)(windowSize.y * 0.3f) + 180});
+    toggleOutlineButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    toggleOutlineButton->onClick = [this](){
+        togglePixelOutlines();
+    };
+    addGUIElement(std::move(toggleOutlineButton));
+    
+    //Submit button
+    auto submitButton = std::make_unique<sk::Button>();
+    submitButton->init("Submit", {120, 50}, sf::Color(100, 200, 100), sf::Color::White, mFont, 20);
+    submitButton->setPosition({(float)(windowSize.x * 0.5f) - 60, (float)(windowSize.y - 70)});
+    submitButton->setBtnHoverColor(sf::Color(70, 170, 70));
+    submitButton->onClick = [](){ std::cout << "Drawing Submitted" << '\n'; };
+    addGUIElement(std::move(submitButton));
+}
+
+void CanvasScene::initColorPalette(sk::Window& window){
+    const int size = 30.f;
+    const float startX = 15.f;
+    const float startY = window.getWindowSize().y * 0.7f;
+    const float spacing = 3.f;
+
+    // current selected 
+    auto selectedColorIcon = std::make_unique<sk::Button>();
+
+    selectedColorIcon->init(
+        "",
+        {size * 1.5f, size * 1.5f},
+        mTool.getColorSelected(),
+        sf::Color::White,
+        mFont,
+        0
+    );
+
+    selectedColorIcon->setPosition({
+        window.getWindowSize().x * 0.95f,
+        window.getWindowSize().y * 0.05f
+    });
+
+    selectedColorIcon->setBtnOutlineColor(sf::Color::White);
+    selectedColorIcon->setBtnOutlineThickness(3);
+
+    mSelectedColorIcon = selectedColorIcon.get();
+
+    addGUIElement(std::move(selectedColorIcon));
+
+    for(int i = 0; i < mColorPalette.size(); ++i){
+        auto colorBtn = std::make_unique<sk::Button>();
 
 
-    addGUIElement(std::move(testButton));
+        sf::Color color = mColorPalette[i];
+
+        colorBtn->init("", {size,size}, color, sf::Color::Transparent, mFont, 0);
+        colorBtn->setBtnHoverColor({
+                static_cast<sf::Uint8>(color.r * 0.6f),
+                static_cast<sf::Uint8>(color.g * 0.6f),
+                static_cast<sf::Uint8>(color.b * 0.6f)
+        });
+
+        int row = i / 4;
+        int col = i % 4;
+
+        colorBtn->setPosition({
+            startX + col * (size + spacing),
+            startY + row * (size + spacing)
+        });
+
+        colorBtn->onClick =[this, color](){
+            mTool.setPixelColor(color); 
+
+            if(mSelectedColorIcon) mSelectedColorIcon->setBtnFillColor(color);
+            
+        };
+
+        addGUIElement(std::move(colorBtn));
+
+
+
+    }
+
+
+
+}
+
+void CanvasScene::togglePixelOutlines(){
+    mShowPixelOutlines = !mShowPixelOutlines;
+    if(mShowPixelOutlines)
+        mGridPixelOutlineSize = mDefaultOutlineSize;
+    else
+        mGridPixelOutlineSize = 0.f;
+
+
+    rebuildCanvas();
+
+
+}
+
+void CanvasScene::rebuildCanvas(){
+    float startX = mCanvasPos.x;
+    float startY = mCanvasPos.y;
+
+    mCanvasBuffer.setPrimitiveType(sf::Quads);
+    mCanvasBuffer.resize(CANVAS_SIZE * CANVAS_SIZE * QUAD_POINT_COUNT);
+
+    for(int y = 0; y < CANVAS_SIZE; ++y){
+        for(int x = 0; x < CANVAS_SIZE; ++x){
+            int index = (x + y * CANVAS_SIZE) * QUAD_POINT_COUNT;
+
+            float posX = startX + x * (mGridPixelSize + mGridPixelOutlineSize);
+            float posY = startY + y * (mGridPixelSize + mGridPixelOutlineSize);
+
+            mCanvasBuffer[index + 0].position = {posX, posY};
+            mCanvasBuffer[index + 1].position = {posX + mGridPixelSize, posY};
+            mCanvasBuffer[index + 2].position = {posX + mGridPixelSize, posY + mGridPixelSize};
+            mCanvasBuffer[index + 3].position = {posX, posY + mGridPixelSize};
+
+
+            for(int i = 0; i < 4; ++i){
+                mCanvasBuffer[index +i].color = mCanvas[x][y];
+            }
+        }
+    }
+
+}
+
+void CanvasScene::clearCanvas(){
+    for(int y = 0; y < CANVAS_SIZE; ++y){
+        for(int x = 0; x < CANVAS_SIZE; ++x){
+            mCanvas[x][y] = sf::Color::White;
+        }
+    }
+
+    rebuildCanvas();
 }
 
 void CanvasScene::initCanvas(sk::Window& window){
     
+    float totalSize = CANVAS_SIZE * (mGridPixelSize + mGridPixelOutlineSize);
+
+    sf::Vector2i winSize = window.getWindowSize();
+
+    float startX = (winSize.x - totalSize) / 2.f;
+    float startY = (winSize.y - totalSize) / 2.f;
+
+    mCanvasPos = {startX, startY};
+
+    clearCanvas();
+
 }
 
-CanvasScene::CanvasScene(sk::Window& window){
+void CanvasScene::setPixelColor(int x, int y, sf::Color color){
+    mCanvas[x][y] = color;
+
+    int index = (x + y * CANVAS_SIZE) * QUAD_POINT_COUNT;
+    for(int i = 0; i < QUAD_POINT_COUNT; ++i){
+        mCanvasBuffer[index + i].color = color;
+    }
+}
+
+
+const sf::Color& CanvasScene::getPixelColor(int x, int y){
+    return mCanvas[x][y];
+}
+
+CanvasScene::CanvasScene(sk::Window& window)
+: mTool(mGridPixelSize, mGridPixelOutlineSize){
     initButtons(window);
+    initColorPalette(window);
     initCanvas(window);
+
+    mTool.setGridOffset(mCanvasPos);
 }
 
-void CanvasScene::update(const Input& input){
-    // allow user to draw
+void CanvasScene::brushStroke(const Input& input){
+
+    if(input.mouseButton1Pressed || input.mouseButton1Clicked){
+        int x = mTool.getMouseGridPosition().x;
+        int y = mTool.getMouseGridPosition().y;
+
+        if(getPixelColor(x, y) != mTool.getColorSelected()){
+            setPixelColor(x, y, mTool.getColorSelected());
+        }
+
+    }
+}
+
+void CanvasScene::eraseStroke(const Input& input){
+    if(input.mouseButton1Pressed || input.mouseButton1Clicked){
+        int x = mTool.getMouseGridPosition().x;
+        int y = mTool.getMouseGridPosition().y;
+
+        setPixelColor(x, y, sf::Color::White);
+
+    }
+    
+}
+
+void CanvasScene::bucketStroke(const Input& input){
+    if(input.mouseButton1Clicked){
+        int startX = mTool.getMouseGridPosition().x;
+        int startY = mTool.getMouseGridPosition().y;
+
+        sf::Color currColor = getPixelColor(startX, startY);
+        sf::Color newColor = mTool.getColorSelected();
+
+        if(newColor == currColor) return;
+
+        std::queue<sf::Vector2i> q;
+
+        q.push({startX, startY});
+
+        while(!q.empty()){
+            sf::Vector2i p = q.front();
+            q.pop();
+
+            int x = p.x;
+            int y = p.y;
+
+            // check boundarys of canvas first
+            if(x < 0 || y < 0 || x >= CANVAS_SIZE || y >= CANVAS_SIZE)
+                continue;
+
+            if(getPixelColor(x, y) != currColor)
+                continue;
+
+            setPixelColor(x, y, newColor);
+
+            // all neighbours
+            q.push({x + 1, y});
+            q.push({x - 1, y});
+            q.push({x, y + 1});
+            q.push({x, y - 1});
+
+
+        }
+    }
+
+}
+
+void CanvasScene::update(const Input& input){ 
+    mTool.update(input);
+    
+    // check for mouse clicks, then paint canvas
+    if(!mTool.getOutOfBounds()){
+        switch (mTool.getToolType()) {
+            case BRUSH:
+                brushStroke(input);
+                break;
+            case ERASE:
+                eraseStroke(input);
+                break;
+            case BUCKET:
+                bucketStroke(input);
+                break;
+            default:
+                break;
+        }
+
+    }
 
 
     Scene::update(input);
 }
 
-void CanvasScene::draw(sk::Window& window){
 
+
+void CanvasScene::draw(sk::Window& window){
+    window.getRenderWindow()->draw(mCanvasBuffer);
+
+    mTool.draw(window);
     Scene::draw(window);
 }
 
