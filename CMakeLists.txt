@@ -5,20 +5,32 @@ set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
-include(FetchContent)
+include(FetchContent) # SFMLv2.6 
+FetchContent_Declare( 
+    SFML 
+    GIT_REPOSITORY https://github.com/SFML/SFML.git 
+    GIT_TAG 2.6.x 
+) 
 
+FetchContent_MakeAvailable(SFML) 
 
-# SFMLv2.6
-FetchContent_Declare(
-    SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x
-)
+if(WIN32)
+    FetchContent_Declare(
+        curl
+        GIT_REPOSITORY https://github.com/curl/curl.git
+        GIT_TAG curl-8_7_1
+    )
 
-FetchContent_MakeAvailable(SFML)
+    set(BUILD_CURL_EXE OFF CACHE BOOL "" FORCE)
+    set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
 
-find_package(CURL REQUIRED)
+    FetchContent_MakeAvailable(curl)
 
+    set(CURL_LIB libcurl)
+else()
+    find_package(CURL REQUIRED)
+    set(CURL_LIB CURL::libcurl)
+endif()
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
@@ -43,20 +55,18 @@ add_executable(${PROJECT_NAME}
     src/networking/NetworkClient.cpp
 )
 
-
-# include .dll files in the exe
 if (WIN32)
-    add_custom_command(TARGET Sketchle POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_RUNTIME_DLLS:Sketchle>
-        $<TARGET_FILE_DIR:Sketchle>
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
         COMMAND_EXPAND_LISTS
-        )
+    )
 endif()
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    CURL::libcurl
+    ${CURL_LIB}
     sfml-graphics
     sfml-window
     sfml-system
