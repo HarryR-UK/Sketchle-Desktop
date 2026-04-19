@@ -52,7 +52,10 @@ As this program is made in C++, CMake is used as a compilation tool. This allows
 `sudo apt update`
 2.Ensure all packages are installed:
 ```sh
- sudo apt install cmake build-essential libcurl4-openssl-dev
+sudo apt install cmake build-essential \
+libcurl4-openssl-dev \
+libx11-dev libxrandr-dev libxcursor-dev libxi-dev \
+libudev-dev libfreetype6-dev libopenal-dev libvorbis-dev libflac-dev
 ```
 3. Then to compile and run the application ensure you are working in the project root directory. Run the following commands:
 ```sh
