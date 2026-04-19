@@ -32,6 +32,8 @@ As soon as the user is happy with their drawing a simple tap of the submit butto
 ## Instructions (How to Compile and Run)
 As this program is made in C++, CMake is used as a compilation tool. This allows for library paths to be found easily. SFMLv2.6 is automatically fetched via CMake. 
 
+Firstly ensure you have Git installed. Then run `git clone https://github.com/HarryR-UK/Sketchle-Desktop/`. This will copy the code to your folder and you can `cd` into it for the following installation instructions.
+
 ### MacOS
 1. Ensure homebrew is installed (or any preferred package manager). This can be installed ![here](https://brew.sh/) 
 2. Once homebrew is properly setup use the following commands
