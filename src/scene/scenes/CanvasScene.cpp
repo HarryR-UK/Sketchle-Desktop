@@ -126,6 +126,7 @@ void CanvasScene::initColorPalette(sk::Window& window){
     mSelectedColorIcon = selectedColorIcon.get();
 
     addGUIElement(std::move(selectedColorIcon));
+       
 
     for(int i = 0; i < mColorPalette.size(); ++i){
         auto colorBtn = std::make_unique<sk::Button>();
