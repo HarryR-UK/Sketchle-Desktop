@@ -46,7 +46,7 @@ namespace sk {
 
             void update(const Input& input) override;
             
-            void update(const Input& input, float dt, float elapsed);
+            void update(const Input& input, float dt, float elapsed) override;
 
             void mouseHovered();
             void mouseNotHovered();
