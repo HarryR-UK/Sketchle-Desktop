@@ -77,7 +77,7 @@ cd vcpkg
 ```sh
     cmake -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake -S . -B build
     cd build && cmake --build .
-    cd bin
+    cd bin/Debug
     .\Sketchle
 ```
 
