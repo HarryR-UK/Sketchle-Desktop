@@ -66,9 +66,16 @@ libudev-dev libfreetype6-dev libopenal-dev libvorbis-dev libflac-dev
 ```
 
 ### Windows
-1. To compile and run the application ensure you are working in the project root directory. Run the following commands:
+1. run the following commands if vcpkg not already installed:
 ```sh
-    cmake -S . -B build
+git clone https://github.com/microsoft/vcpkg
+cd vcpkg
+.\bootstrap-vcpkg.bat
+```
+2. Then install curl with vcpkg `.\vcpkg install curl`
+3. Then to compile and run the application ensure you are working in the project root directory. Run the following commands:
+```sh
+    cmake -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake -S . -B build
     cd build && cmake --build .
     cd bin
     .\Sketchle

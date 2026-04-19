@@ -14,23 +14,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML) 
 
-if(WIN32)
-    FetchContent_Declare(
-        curl
-        GIT_REPOSITORY https://github.com/curl/curl.git
-        GIT_TAG curl-8_7_1
-    )
-
-    set(BUILD_CURL_EXE OFF CACHE BOOL "" FORCE)
-    set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
-
-    FetchContent_MakeAvailable(curl)
-
-    set(CURL_LIB libcurl)
-else()
-    find_package(CURL REQUIRED)
-    set(CURL_LIB CURL::libcurl)
-endif()
+find_package(CURL REQUIRED)
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
@@ -67,7 +51,7 @@ endif()
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    ${CURL_LIB}
+    CURL::libcurl
     sfml-graphics
     sfml-window
     sfml-system
