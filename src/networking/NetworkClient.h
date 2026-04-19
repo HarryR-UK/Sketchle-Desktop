@@ -9,7 +9,7 @@ namespace sk {
             //CURL* mCurl;
 
         private:
-            size_t serverCallBack(void* contents, size_t size, size_t nmemb, void* userp);
+            // size_t serverCallBack(void* contents, size_t size, size_t nmemb, void* userp);
 
         public:
 
