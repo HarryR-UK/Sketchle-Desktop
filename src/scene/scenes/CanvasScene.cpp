@@ -290,7 +290,7 @@ void CanvasScene::bucketStroke(const Input& input){
 
 }
 
-void CanvasScene::update(const Input& input, sk::Window& window){ 
+void CanvasScene::update(const Input& input, sk::Window& window, float dt, float elapsed){ 
     mTool.update(input);
     
     // check for mouse clicks, then paint canvas
@@ -315,7 +315,7 @@ void CanvasScene::update(const Input& input, sk::Window& window){
     cameraPan(input, window);
     cameraZoom(input, window);
 
-    Scene::update(input, window);
+    Scene::update(input, window, dt, elapsed);
 }
 
 void CanvasScene::cameraZoom(const Input& input, sk::Window& window){

@@ -20,10 +20,7 @@ namespace sk {
             template<typename T, typename... Args>
             void changeScene(Args&&... args){
                 mCurrentScene = std::make_unique<T>(std::forward<Args>(args)...);
-            }
-
-            void update(const Input& input, sk::Window& window);
-            
+            }            
             void update(const Input& input, sk::Window& window, float dt, float elapsed);
 
             void draw(sk::Window& window);

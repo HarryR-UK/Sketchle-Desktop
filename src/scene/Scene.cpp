@@ -12,11 +12,6 @@ Scene::Scene(){}
 Scene::~Scene(){
 }
 
-void Scene::update(const Input& input, sk::Window& window){
-    for(auto& e : mGUIElements){
-        e->update(input);
-    }
-}
 
 void Scene::update(const Input& input,sk::Window& window, float dt, float elapsed){
     for(auto& e : mGUIElements){

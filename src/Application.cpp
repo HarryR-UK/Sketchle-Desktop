@@ -31,7 +31,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<CanvasScene>(mWindow);
+    mSceneManager.changeScene<MainMenuScene>(mWindow);
     
     sk::Clock clock;
 
@@ -47,7 +47,6 @@ void Application::run(){
         // update
         mInput.update(mWindow);
         
-        mSceneManager.update(mInput, mWindow);
         mSceneManager.update(mInput, mWindow, dt, elapsed);
 
 

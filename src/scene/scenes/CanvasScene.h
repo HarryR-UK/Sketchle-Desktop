@@ -79,7 +79,7 @@ namespace sk {
         public:
             CanvasScene(sk::Window& window);
             ~CanvasScene();
-            void update(const Input& input, sk::Window& window) override;
+            void update(const Input& input, sk::Window& window, float dt, float elapsed) override;
             void draw(sk::Window& window) override;
     };
 
