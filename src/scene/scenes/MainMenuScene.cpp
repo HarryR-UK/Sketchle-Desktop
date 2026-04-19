@@ -10,6 +10,7 @@
 using namespace sk;
 
 MainMenuScene::MainMenuScene(sk::Window& window){
+    // text button
     mFont.loadFromFile("assets/arial/ARIAl.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
 
@@ -26,6 +27,23 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
     loginButton->onClick = [](){ std::cout << "Login Clicked" << '\n'; };
     addGUIElement(std::move(loginButton));
+    
+    // image button
+    auto mImageButton = std::make_unique<sk::Button>();
+    
+    sf::Image testImage;
+    if(!testImage.loadFromFile("assets/Trollface.png")){
+        std::cout << "Could not load image (MainMenuScene.cpp)" << '\n';
+    }
+    
+    mImageButton->init(testImage, {100,100});
+    mImageButton->setPosition({(float)(windowSize.x * 0.3f),(float)(windowSize.y * 0.5f)});
+    
+    mImageButton->onClick = [](){
+        std::cout << "trololololololololololololololo" << '\n';
+    };
+    
+    addGUIElement(std::move(mImageButton));
     
     
     // username textbox

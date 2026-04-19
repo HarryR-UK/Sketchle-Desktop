@@ -1,5 +1,5 @@
 //
-// Author: Harry Rotheram
+// Author: Harry Rotheram and Finn O'Hare
 //
 //
 #include "Button.h"
@@ -32,19 +32,38 @@ void Button::init(const std::string& txt, const sf::Vector2f& size, const sf::Co
     mButtonSize = size;
 }
 
-void Button::setPosition(const sf::Vector2f& pos){
-    mButtonShape.setPosition(pos);
+// button constructor using image instead of text
+void Button::init(const sf::Image& image, const sf::Vector2f& size){
+    if(!mTexture.loadFromImage(image)){
+        std::cout << "Could not load image (Button.cpp)" << '\n';
+        return;
+    }
+    
+    mSprite.setTexture(mTexture);
+    
+    sf::Vector2u imgSize = image.getSize();
+    
+    mSprite.setScale(size.x / imgSize.x, size.y / imgSize.y);
+    
+    mButtonSize = size;
+    mUseImage = true;
+}
+
+void Button::setPosition(const sf::Vector2f& pos){   
     mPosition = sf::Vector2f(pos);
     
-    // based on SFML coordinate system (0,0) being top left
-    // we can center text accurately with this knowledge (using half the width of the button shapes)
-    float xPos = (pos.x + mButtonShape.getGlobalBounds().width * 0.5f) - (mText.getGlobalBounds().width * 0.5f);
-    float yPos = (pos.y + mButtonShape.getGlobalBounds().height * 0.5f) - (mText.getGlobalBounds().height * 0.5f);
+    if(mUseImage){
+        mSprite.setPosition(pos);
+    } else{
+        mButtonShape.setPosition(pos);
+        
+        // based on SFML coordinate system (0,0) being top left
+        // we can center text accurately with this knowledge (using half the width of the button shapes)
+        float xPos = (pos.x + mButtonShape.getGlobalBounds().width * 0.5f) - (mText.getGlobalBounds().width * 0.5f);
+        float yPos = (pos.y + mButtonShape.getGlobalBounds().height * 0.5f) - (mText.getGlobalBounds().height * 0.5f);
 
-    mText.setPosition(sf::Vector2f(xPos, yPos));
-
-
-
+        mText.setPosition(sf::Vector2f(xPos, yPos));
+    }
 }
 
 void Button::setBtnHoverColor(const sf::Color& c){
@@ -56,25 +75,34 @@ void Button::setTxtHoverColor(const sf::Color& c){
 }
 
 void Button::mouseHovered(){
-    mButtonShape.setFillColor(mBtnHoverColor);
-    mText.setFillColor(mTextHoverColor);
+    if(mUseImage){
+        mSprite.setColor(sf::Color(200,200,200));
+    }else{
+        mButtonShape.setFillColor(mBtnHoverColor);
+        mText.setFillColor(mTextHoverColor);
+    }
+    
 }
 
 void Button::mouseNotHovered(){
     if(mButtonShape.getFillColor() == mBtnColor && mText.getFillColor() == mTextColor) return; 
-
-    mButtonShape.setFillColor(mBtnColor);
-    mText.setFillColor(mTextColor);
+    
+    if(mUseImage){
+        mSprite.setColor(sf::Color::White);
+    }else{
+        mButtonShape.setFillColor(mBtnColor);
+        mText.setFillColor(mTextColor);
+    }
 }
 
 const sf::Vector2f& Button::getPosition(){ return mPosition; }
 
 void Button::update(const Input& input){
-    sf::Vector2f btnPos = mButtonShape.getPosition();
+    sf::Vector2f btnPos = mPosition;
 
-    float btnPosWidth = mButtonShape.getPosition().x + mButtonShape.getLocalBounds().width;
-    float btnPosHeight = mButtonShape.getPosition().y + mButtonShape.getLocalBounds().height;
-
+    float btnPosWidth = mPosition.x + mButtonSize.x;
+    float btnPosHeight = mPosition.y + mButtonSize.y;
+    
     const sf::Vector2i* mousePos = &input.mousePositionWindow;
     
     // checking mouse is in the bounds
@@ -86,7 +114,6 @@ void Button::update(const Input& input){
     }else{
         mouseNotHovered();
     }
-
 }
 
 
@@ -110,8 +137,12 @@ void Button::setBtnOutlineThickness(const int& t){
 
 void Button::draw(sk::Window& window){
     // render all button elements here
-    window.getRenderWindow()->draw(mButtonShape);
-    window.getRenderWindow()->draw(mText);
+    if(mUseImage){
+        window.getRenderWindow()->draw(mSprite);
+    }else{
+        window.getRenderWindow()->draw(mButtonShape);
+        window.getRenderWindow()->draw(mText);
+    }    
 }
 
 sf::Vector2f Button::getButtonSize(){
