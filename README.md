@@ -37,11 +37,11 @@ As this program is made in C++, CMake is used as a compilation tool. This allows
 2. Once homebrew is properly setup use the following commands
     ```sh
     brew upgrade
-    brew install cmake make curl
+    brew install cmake make curl freetype
     ```
 3. Then to compile and run the application ensure you are working in the project root directory. Run the following commands:
 ```sh
-    cmake -S . -B build
+    cmake -S . -B build -DCMAKE_PREFIX_PATH="$(brew --prefix)"
     cd build && make
     cd bin/
     ./Sketchle
