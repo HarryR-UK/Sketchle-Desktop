@@ -3,7 +3,7 @@
 
 ## About
 
-Sketchle Desktop works in conjunction with the ![sketcle web server](https://github.com/nicoloveneziale/sketchle)
+Sketchle Desktop works in conjunction with the ![sketchle web server](https://github.com/nicoloveneziale/sketchle)
 
 This allows containment of two functions to allow a more specialised focus on different features: 
 

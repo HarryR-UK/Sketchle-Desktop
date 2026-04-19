@@ -46,7 +46,7 @@ void Application::run(){
         // rendering
         render();
         
-
+        mInput.resetFrame();
     }
 }
 

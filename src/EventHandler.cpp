@@ -22,6 +22,9 @@ void EventHandler::pollEvents(sk::Window& window, Input& input){
             case sf::Event::TextEntered:
                 input.lastCharTyped = mEvent.text.unicode; 
                 break;
+            case sf::Event::MouseWheelScrolled:
+                input.scrollWheelChange += mEvent.mouseWheelScroll.delta;
+                break;
             default:
                 break;
         }

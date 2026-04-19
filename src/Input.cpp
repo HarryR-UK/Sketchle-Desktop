@@ -30,3 +30,7 @@ void Input::update(sk::Window& window){
     
 }
 
+void Input::resetFrame(){
+    scrollWheelChange = 0.f;
+}
+

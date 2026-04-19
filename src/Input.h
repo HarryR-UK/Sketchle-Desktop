@@ -21,7 +21,10 @@ namespace sk {
         
         sf::Uint32 lastCharTyped = 0;
 
+        float scrollWheelChange = 0.0f;
+
         void update(sk::Window& window);
+        void resetFrame();
 
         private:
             bool mouseButton1Held = false;
