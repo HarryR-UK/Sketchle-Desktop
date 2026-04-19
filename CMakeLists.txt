@@ -13,6 +13,7 @@ add_executable(${PROJECT_NAME}
     src/Window.cpp
     src/EventHandler.cpp
     src/Input.cpp
+    src/Clock.cpp
 
     src/gui/GUIElement.cpp
     src/gui/Button.cpp
