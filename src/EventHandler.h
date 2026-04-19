@@ -15,15 +15,16 @@ namespace sk {
 
         private:
             sf::Event mEvent;
+            bool mIsKeyHeld = false;
         private:
-
+            
         public:
 
         public:
             EventHandler();
-            ~EventHandler();
-            const sf::Event& getEvent();
-            void pollEvents(sk::Window& window);
+            ~EventHandler();            
+            void pollEvents(sk::Window& window, Input& input);
+            
 
 
     };

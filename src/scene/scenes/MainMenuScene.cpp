@@ -1,5 +1,5 @@
 //
-// Author: Harry Rotheram
+// Author: Harry Rotheram and Finn O'Hare
 //
 //
 #include "MainMenuScene.h"
@@ -26,12 +26,47 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
     loginButton->onClick = [](){ std::cout << "Login Clicked" << '\n'; };
     addGUIElement(std::move(loginButton));
+    
+    
+    // username textbox
+    auto mUnameTextbox = std::make_unique<sk::Textbox>();
+    auto textboxPtr = mUnameTextbox.get();
+    
+    mUnameTextbox->init("USERNAME", {300, 50}, sf::Color::White, sf::Color::Black, mFont, 24);
+    mUnameTextbox->setPlaceholder("USERNAME");
 
-    //Sign up button
-    auto signupButton = std::make_unique<sk::Button>();
-    signupButton->init("Sign Up", {200, 50}, sf::Color(220, 180, 255), sf::Color::White, mFont, 24);
-    signupButton->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.5f) + 70});
-    signupButton->setBtnHoverColor(sf::Color(200, 150, 255));
-    signupButton->onClick = [](){ std::cout << "Sign Up Clicked" << '\n'; };
-    addGUIElement(std::move(signupButton));
+    mUnameTextbox->setPosition({
+        (float)(windowSize.x * 0.4f),
+        (float)(windowSize.y * 0.7f)
+    });
+
+    mUnameTextbox->setTboxHoverColor(sf::Color(200, 200, 200));
+    mUnameTextbox->setTxtHoverColor(sf::Color::Black);
+        
+    mUnameTextbox->onEnter = [textboxPtr](){
+        std::cout << textboxPtr->getText() << '\n'; // print text on enter
+    };
+    
+    addGUIElement(std::move(mUnameTextbox));   
+    
+    // password textbox
+    auto mPwordTextbox = std::make_unique<sk::Textbox>();
+    /*auto*/ textboxPtr = mPwordTextbox.get();
+
+    mPwordTextbox->init("PASSWORD", {300, 50}, sf::Color::White, sf::Color::Black, mFont, 24);
+    mPwordTextbox->setPlaceholder("PASSWORD");
+
+    mPwordTextbox->setPosition({
+        (float)(windowSize.x * 0.4f),
+        (float)(windowSize.y * 0.8f)
+    });
+
+    mPwordTextbox->setTboxHoverColor(sf::Color(200, 200, 200));
+    mPwordTextbox->setTxtHoverColor(sf::Color::Black);
+    
+    mPwordTextbox->onEnter = [textboxPtr](){
+        std::cout << textboxPtr->getText() << '\n'; // print text on enter
+    };
+    
+    addGUIElement(std::move(mPwordTextbox));   
 }

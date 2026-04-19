@@ -29,11 +29,11 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<CanvasScene>(mWindow);
+    mSceneManager.changeScene<MainMenuScene>(mWindow);
 
     while(mWindow.getIsWindowOpen()){
         // poll events
-        mEventHandler.pollEvents(mWindow);
+        mEventHandler.pollEvents(mWindow, mInput);
 
         // update
         mInput.update(mWindow);

@@ -4,6 +4,7 @@
 //
 #include "Input.h"
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Event.hpp>
 
 
 using namespace sk;
@@ -14,7 +15,6 @@ void Input::update(sk::Window& window){
         this->mousePositionScreen = sf::Mouse::getPosition();
         this->mousePositionWindow = sf::Mouse::getPosition(*(window.getRenderWindow()));
         this->mousePositionView = window.mapPixeltoCoords(mousePositionWindow);
-
 
         // Left button
         mouseButton1Clicked = !mouseButton1Held && sf::Mouse::isButtonPressed(sf::Mouse::Left);
@@ -27,7 +27,6 @@ void Input::update(sk::Window& window){
         mouseButton2Held = mouseButton2Pressed;
     }
 
-
-
+    
 }
 

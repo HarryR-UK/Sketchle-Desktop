@@ -25,7 +25,7 @@ namespace sk {
             sf::Color mTextHoverColor = sf::Color::Black;
 
             sf::Vector2f mButtonSize;
-
+           
 
         private:
 
@@ -55,6 +55,8 @@ namespace sk {
             void mouseNotHovered();
             
             sf::Vector2f getButtonSize();
+            
+            std::function<void()> onClick;
 
         
     };

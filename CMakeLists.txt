@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
 
     src/gui/GUIElement.cpp
     src/gui/Button.cpp
+    src/gui/Textbox.cpp
 
     src/scene/Scene.cpp
     src/scene/SceneManager.cpp

@@ -3,12 +3,12 @@
 
 #include <cstddef>
 
-//#include <curl/curl.h>
+// #include <curl/curl.h>
 
 namespace sk {
     class NetworkClient{
         private:
-            //CURL* mCurl;
+            // CURL* mCurl;
 
         private:
             size_t serverCallBack(void* contents, size_t size, size_t nmemb, void* userp);

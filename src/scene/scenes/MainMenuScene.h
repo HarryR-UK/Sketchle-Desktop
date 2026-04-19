@@ -8,6 +8,7 @@
 #include "../Scene.h"
 #include "../../Window.h"
 #include "../../gui/Button.h"
+#include "../../gui/Textbox.h"
 #include <SFML/Graphics/Font.hpp>
 
 namespace sk {
@@ -18,7 +19,7 @@ namespace sk {
         public:
         public:
             MainMenuScene(sk::Window& window);
-
+          
     };
 
 }
