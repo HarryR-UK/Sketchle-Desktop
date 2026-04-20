@@ -91,8 +91,20 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     sk::Textbox* pwordTextboxPtr = mPwordTextbox.get();
 
     addGUIElement(std::move(mPwordTextbox));   
-
-
+    
+    
+    //Error message
+    auto errorText = std::make_unique<sk::Button>();
+    errorText->init(mErrResponse, {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 50);
+    errorText->setPosition({(float)(windowSize.x * 0.3f) - 100, (float)(windowSize.y * 0.01f)}); 
+    errorText->setBtnOutlineColor(sf::Color::Transparent);
+    errorText->setBtnOutlineThickness(0);    
+    errorText->setTxtOutlineColor(sf::Color::Black);
+    errorText->setTxtOutlineThickness(2);
+    
+    sk::Button* errTxtPtr = errorText.get();
+    
+    addGUIElement(std::move(errorText));
 
 
     //Login button
@@ -100,14 +112,21 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     loginButton->init("Login", {200, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 24);
     loginButton->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.5f)});
     loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    loginButton->onClick = [pwordTextboxPtr, unameTxtboxPtr, this](){
+    loginButton->onClick = [pwordTextboxPtr, unameTxtboxPtr, errTxtPtr, this](){
         std::string u = unameTxtboxPtr->getText();
         std::string p = pwordTextboxPtr->getText();
         if(mNetClient.attemptLogin(u, p)){
             mChangeToCanvas = true;
+        } else{
+            mErrResponse = mNetClient.getServerResponse();
+            errTxtPtr->setTxt(mErrResponse);
         }
     };
     addGUIElement(std::move(loginButton));
+    
+    
+    
+
 }
 
 

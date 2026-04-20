@@ -55,6 +55,7 @@ namespace sk {
 
             void setTxtOutlineColor(const sf::Color& c);
             void setTxtOutlineThickness(const int& t);
+            void setTxt(const std::string& txt);
 
             void draw(sk::Window& window) override;
 

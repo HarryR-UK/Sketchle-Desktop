@@ -21,6 +21,7 @@ namespace sk {
             sk::NetworkClient& mNetClient;
             bool mChangeToCanvas{false};
             sk::SceneManager& mSceneManager;
+            std::string mErrResponse = "";
         private:
         public:
         public:

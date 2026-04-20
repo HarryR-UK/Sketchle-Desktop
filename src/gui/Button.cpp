@@ -134,6 +134,10 @@ void Button::setTxtFillFolor(const sf::Color& c){
     mText.setFillColor(c);
     mTextColor = c;
 }
+void Button::setTxt(const std::string& txt){
+    mText.setString(txt);
+}
+
 void Button::setBtnOutlineColor(const sf::Color& c){
     mButtonShape.setOutlineColor(c);
 }
