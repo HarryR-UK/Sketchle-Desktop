@@ -30,6 +30,7 @@ namespace sk {
             const std::string& getServerResponse() const;
             const std::string& attemptLogin(std::string username, std::string password);
             const std::string attemptImageSubmit(sf::Image image);
+            const std::string attemptGetDailyTheme();
 
 
     };

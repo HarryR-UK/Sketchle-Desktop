@@ -23,7 +23,73 @@ void NetworkClient::addTokenHeader(curl_slist*& headers){
 }
 
 const std::string NetworkClient::attemptImageSubmit(sf::Image image){
-    return "";
+    mServerResponse.clear();
+    image.saveToFile("drawing.png");
+    std::string url = mDomain + "/drawings/submit";
+
+    mCurl = curl_easy_init();
+
+    if(mCurl){
+        curl_easy_setopt(mCurl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(mCurl, CURLOPT_POST, 1L);
+
+        struct curl_slist* headers = nullptr;
+        addTokenHeader(headers);
+
+        curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, headers);
+
+        curl_mime* mime = curl_mime_init(mCurl);
+
+        curl_mimepart* part = curl_mime_addpart(mime);
+        curl_mime_name(part, "file");
+        curl_mime_filedata(part, "drawing.png");
+
+        curl_easy_setopt(mCurl, CURLOPT_MIMEPOST, mime);
+
+        curl_easy_setopt(mCurl, CURLOPT_WRITEFUNCTION, sk::CurlUtil::writeCallback);
+        curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, &mServerResponse);
+        CURLcode res = curl_easy_perform(mCurl);
+
+        if (res != CURLE_OK) {
+            std::cerr << "CURL ERROR: " << curl_easy_strerror(res) << std::endl;
+        }
+
+        curl_mime_free(mime);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(mCurl);
+
+    }
+
+    return mServerResponse;
+
+
+}
+
+const std::string NetworkClient::attemptGetDailyTheme(){
+    mServerResponse.clear();
+
+    std::string url = mDomain + "/theme/daily";
+
+    mCurl = curl_easy_init();
+
+    if(mCurl){
+        curl_easy_setopt(mCurl, CURLOPT_URL, url.c_str());
+
+        curl_easy_setopt(mCurl, CURLOPT_WRITEFUNCTION, sk::CurlUtil::writeCallback);
+        curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, &mServerResponse);
+
+        CURLcode c = curl_easy_perform(mCurl);
+        curl_easy_cleanup(mCurl);
+
+
+        // error checking
+        if(c != CURLE_OK){
+            std::cerr << "CURL ERROR: " << curl_easy_strerror(c) << '\n';
+        }
+
+    }
+
+    return mServerResponse;
 }
 
 const std::string& NetworkClient::attemptLogin(std::string username, std::string password){

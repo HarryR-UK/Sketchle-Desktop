@@ -17,7 +17,7 @@ int main(void)
     
     sk::NetworkClient net;
 
-    net.attemptLogin("darren123", "HelloDarren123*");
+    std::cout << net.attemptGetDailyTheme();
 
 
     return EXIT_SUCCESS;
