@@ -12,12 +12,9 @@
 int main(void)
 {
 
-    //sk::Application app;
-    //app.run();
+    sk::Application app;
+    app.run();
     
-    sk::NetworkClient net;
-
-    std::cout << net.attemptGetDailyTheme();
 
 
     return EXIT_SUCCESS;
