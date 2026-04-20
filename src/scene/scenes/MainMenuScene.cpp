@@ -35,7 +35,7 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     }
     
     mImageButton->init(testImage, {100,100});
-    mImageButton->setPosition({(float)(windowSize.x * 0.3f),(float)(windowSize.y * 0.5f)});
+    mImageButton->setPosition({(float)(windowSize.x * 0.1f),(float)(windowSize.y * 0.1f)});
     
     mImageButton->onClick = [](){
         std::cout << "trololololololololololololololo" << '\n';
