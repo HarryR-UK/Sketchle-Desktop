@@ -5,7 +5,7 @@
 
 Sketchle Desktop works in conjunction with the ![sketchle web server](https://github.com/nicoloveneziale/sketchle)
 
-> Access the actual signup page ![here](https://sketchle.vercel.app)
+> Access the actual signup page https://sketchle.vercel.app
 
 This allows containment of two functions to allow a more specialised focus on different features: 
 
@@ -37,7 +37,7 @@ As this program is made in C++, CMake is used as a compilation tool. This allows
 Firstly ensure you have Git installed. Then run `git clone https://github.com/HarryR-UK/Sketchle-Desktop/`. This will copy the code to your folder and you can `cd` into it for the following installation instructions.
 
 ### MacOS
-1. Ensure homebrew is installed (or any preferred package manager). This can be installed ![here](https://brew.sh/) 
+1. Ensure homebrew is installed (or any preferred package manager). This can be installed here: https://brew.sh/
 2. Once homebrew is properly setup use the following commands
     ```sh
     brew upgrade
