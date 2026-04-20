@@ -160,6 +160,12 @@ void Button::draw(sk::Window& window){
         window.getRenderWindow()->draw(mText);
     }    
 }
+void Button::setTxtOutlineColor(const sf::Color& c){
+    mText.setOutlineColor(c);
+}
+void Button::setTxtOutlineThickness(const int& t){
+    mText.setOutlineThickness(t);
+}
 
 sf::Vector2f Button::getButtonSize(){
     return mButtonSize;

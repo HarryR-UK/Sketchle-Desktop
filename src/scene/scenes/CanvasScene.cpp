@@ -3,8 +3,10 @@
 
 #include "CanvasScene.h"
 #include "CanvasTools/ToolType.h"
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/System/Vector2.hpp"
 #include <memory>
+#include <string>
 
 using namespace sk;
 
@@ -96,6 +98,21 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
         submitArt(net);
     };
     addGUIElement(std::move(submitButton));    
+    
+    
+    net.attemptGetDailyTheme();
+    std::string theme = "Todays Theme: " + net.getServerResponse();
+
+    auto dailyThemeText = std::make_unique<sk::Button>();
+    dailyThemeText->init(theme, {100,100}, sf::Color::Transparent, sf::Color(180, 100, 255), mFont, 50);
+    dailyThemeText->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.01f)}); 
+    dailyThemeText->setBtnOutlineColor(sf::Color::Transparent);
+    dailyThemeText->setBtnOutlineThickness(0);    
+    dailyThemeText->setTxtOutlineColor(sf::Color::Black);
+    dailyThemeText->setTxtOutlineThickness(2);
+    
+    
+    addGUIElement(std::move(dailyThemeText));
        
 }
 

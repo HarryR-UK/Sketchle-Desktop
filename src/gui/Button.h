@@ -53,6 +53,9 @@ namespace sk {
             void setBtnOutlineThickness(const int& t);
             void setImage(const sf::Image& image);
 
+            void setTxtOutlineColor(const sf::Color& c);
+            void setTxtOutlineThickness(const int& t);
+
             void draw(sk::Window& window) override;
 
             const sf::Vector2f& getPosition();
