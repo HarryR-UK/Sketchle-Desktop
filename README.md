@@ -5,6 +5,8 @@
 
 Sketchle Desktop works in conjunction with the ![sketchle web server](https://github.com/nicoloveneziale/sketchle)
 
+> Access the actual signup page ![here](https://sketchle.vercel.app)
+
 This allows containment of two functions to allow a more specialised focus on different features: 
 
 - The live web server allows the user to make an account, like, report and review other art pieces
