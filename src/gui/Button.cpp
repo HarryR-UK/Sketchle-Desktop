@@ -130,7 +130,7 @@ void Button::setBtnFillColor(const sf::Color& c){
     mButtonShape.setFillColor(c);
     mBtnColor = c;
 }
-void Button::setTxtFillFolor(const sf::Color& c){
+void Button::setTxtFillColor(const sf::Color& c){
     mText.setFillColor(c);
     mTextColor = c;
 }

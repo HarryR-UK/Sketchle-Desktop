@@ -95,7 +95,7 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     
     //Error message
     auto errorText = std::make_unique<sk::Button>();
-    errorText->init(mErrResponse, {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 50);
+    errorText->init(mErrResponse, {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 30);
     errorText->setPosition({(float)(windowSize.x * 0.3f) - 100, (float)(windowSize.y * 0.01f)}); 
     errorText->setBtnOutlineColor(sf::Color::Transparent);
     errorText->setBtnOutlineThickness(0);    

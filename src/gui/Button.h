@@ -47,7 +47,7 @@ namespace sk {
             void setBtnHoverColor(const sf::Color& c);
             void setTxtHoverColor(const sf::Color& c);
             void setBtnFillColor(const sf::Color& c);
-            void setTxtFillFolor(const sf::Color& c);
+            void setTxtFillColor(const sf::Color& c);
             void setBtnOutlineColor(const sf::Color& c);
             void setPosition(const sf::Vector2f& pos);
             void setBtnOutlineThickness(const int& t);
