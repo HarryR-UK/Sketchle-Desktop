@@ -8,7 +8,7 @@
 
 using namespace sk;
 
-void CanvasScene::initButtons(sk::Window& window){
+void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     mFont.loadFromFile("assets/arial/ARIAL.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
     sf::Image brushImage;
@@ -92,9 +92,32 @@ void CanvasScene::initButtons(sk::Window& window){
     submitButton->setPosition({(float)(windowSize.x * 0.95f) - 60, (float)(windowSize.y * 0.85f)}); 
     submitButton->setBtnOutlineColor(sf::Color(104,98,108));
     submitButton->setBtnOutlineThickness(10);    
-    submitButton->onClick = [](){ std::cout << "Drawing Submitted" << '\n'; };
+    submitButton->onClick = [this, &net](){
+        submitArt(net);
+    };
     addGUIElement(std::move(submitButton));    
        
+}
+
+void CanvasScene::submitArt(NetworkClient& net){
+    // convert canvas into sf::Image
+    // send to network
+    sf::Image image;
+    image.create(CANVAS_SIZE, CANVAS_SIZE);
+
+    for(int y = 0; y < CANVAS_SIZE; ++y){
+        for(int x = 0; x < CANVAS_SIZE; ++x){
+            image.setPixel(x, y, mCanvas[x][y]);
+        }
+    }
+    
+    if(!net.attemptImageSubmit(image)){
+        std::cout << "Canvas Error: Could not submit art work" << '\n';
+    }
+
+    std::cout << "IMAGE UPLOADED SUCCESSFULLY" << '\n';
+    
+    
 }
 
 void CanvasScene::initColorPalette(sk::Window& window){
@@ -247,9 +270,9 @@ const sf::Color& CanvasScene::getPixelColor(int x, int y){
     return mCanvas[x][y];
 }
 
-CanvasScene::CanvasScene(sk::Window& window)
-: mTool(mGridPixelSize, mGridPixelOutlineSize){
-    initButtons(window);
+CanvasScene::CanvasScene(sk::Window& window, sk::NetworkClient& net)
+: mTool(mGridPixelSize, mGridPixelOutlineSize), mNetClient{net}{
+    initButtons(window, net);
     initColorPalette(window);
     initCanvas(window);
 

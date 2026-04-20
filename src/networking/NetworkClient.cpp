@@ -22,8 +22,10 @@ void NetworkClient::addTokenHeader(curl_slist*& headers){
     headers = curl_slist_append(headers, auth.c_str());
 }
 
-const std::string NetworkClient::attemptImageSubmit(sf::Image image){
+bool NetworkClient::attemptImageSubmit(sf::Image image){
     mServerResponse.clear();
+
+    bool status = false;
     image.saveToFile("drawing.png");
     std::string url = mDomain + "/drawings/submit";
 
@@ -54,20 +56,23 @@ const std::string NetworkClient::attemptImageSubmit(sf::Image image){
             std::cerr << "CURL ERROR: " << curl_easy_strerror(res) << std::endl;
         }
 
+        status = true;
+
         curl_mime_free(mime);
         curl_slist_free_all(headers);
         curl_easy_cleanup(mCurl);
 
     }
 
-    return mServerResponse;
+    return status;
 
 
 }
 
-const std::string NetworkClient::attemptGetDailyTheme(){
+bool NetworkClient::attemptGetDailyTheme(){
     mServerResponse.clear();
 
+    bool status = false;
     std::string url = mDomain + "/theme/daily";
 
     mCurl = curl_easy_init();
@@ -87,14 +92,17 @@ const std::string NetworkClient::attemptGetDailyTheme(){
             std::cerr << "CURL ERROR: " << curl_easy_strerror(c) << '\n';
         }
 
+        status = true;
+
     }
 
-    return mServerResponse;
+    return status;
 }
 
-const std::string& NetworkClient::attemptLogin(std::string username, std::string password){
+bool NetworkClient::attemptLogin(std::string username, std::string password){
     mServerResponse.clear();
-
+    
+    bool status = false;
     std::stringstream ss;
     ss << "{"
         << "\"username\": \"" << username << "\","
@@ -132,6 +140,7 @@ const std::string& NetworkClient::attemptLogin(std::string username, std::string
         }
 
         if(mServerResponse.find("\"token\"") != std::string::npos){
+            status = true;
             // parses token
             auto start = mServerResponse.find("\"token\"");
             start = mServerResponse.find(":", start);
@@ -143,5 +152,5 @@ const std::string& NetworkClient::attemptLogin(std::string username, std::string
     }
 
 
-    return mServerResponse;
+    return status;
 }

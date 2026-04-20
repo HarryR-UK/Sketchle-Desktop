@@ -11,6 +11,7 @@
 #include "EventHandler.h"
 #include "Input.h"
 #include "Window.h"
+#include "networking/NetworkClient.h"
 #include "scene/SceneManager.h"
 
 #include "scene/scenes/MainMenuScene.h"
@@ -23,7 +24,7 @@ namespace sk{
             sk::EventHandler mEventHandler;
             sk::Input mInput;
             sk::SceneManager mSceneManager;
-
+            sk::NetworkClient mNetworkClient;
             
 
         private:

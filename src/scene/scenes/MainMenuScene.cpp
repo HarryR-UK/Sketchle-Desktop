@@ -3,13 +3,18 @@
 //
 //
 #include "MainMenuScene.h"
+#include "CanvasScene.h"
 #include <SFML/Graphics/Font.hpp>
+#include <cstdlib>
 #include <memory>
 #include <random>
+#include <thread>
 
 using namespace sk;
 
-MainMenuScene::MainMenuScene(sk::Window& window){
+MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::SceneManager& scManager)
+: mNetClient{net}, mSceneManager{scManager}
+{
     // text button
     mFont.loadFromFile("assets/arial/ARIAl.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
@@ -20,13 +25,6 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     titleText->setPosition({(float)(windowSize.x * 0.5f) - 200, (float)(windowSize.y * 0.2f)});
     addGUIElement(std::move(titleText));
 
-    //Login button
-    auto loginButton = std::make_unique<sk::Button>();
-    loginButton->init("Login", {200, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 24);
-    loginButton->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.5f)});
-    loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
-    loginButton->onClick = [](){ std::cout << "Login Clicked" << '\n'; };
-    addGUIElement(std::move(loginButton));
     
     // image button
     auto mImageButton = std::make_unique<sk::Button>();
@@ -41,12 +39,15 @@ MainMenuScene::MainMenuScene(sk::Window& window){
     
     mImageButton->onClick = [](){
         std::cout << "trololololololololololololololo" << '\n';
+        exit(EXIT_FAILURE);
     };
     
     addGUIElement(std::move(mImageButton));
     
     
     // username textbox
+
+
     auto mUnameTextbox = std::make_unique<sk::Textbox>();
     auto textboxPtr = mUnameTextbox.get();
     
@@ -65,6 +66,7 @@ MainMenuScene::MainMenuScene(sk::Window& window){
         std::cout << textboxPtr->getText() << '\n'; // print text on enter
     };
     
+    sk::Textbox* unameTxtboxPtr = mUnameTextbox.get();
     addGUIElement(std::move(mUnameTextbox));   
     
     // password textbox
@@ -86,5 +88,35 @@ MainMenuScene::MainMenuScene(sk::Window& window){
         std::cout << textboxPtr->getText() << '\n'; // print text on enter
     };
     
+    sk::Textbox* pwordTextboxPtr = mPwordTextbox.get();
+
     addGUIElement(std::move(mPwordTextbox));   
+
+
+
+
+    //Login button
+    auto loginButton = std::make_unique<sk::Button>();
+    loginButton->init("Login", {200, 50}, sf::Color(180, 100, 255), sf::Color::White, mFont, 24);
+    loginButton->setPosition({(float)(windowSize.x * 0.5f) - 100, (float)(windowSize.y * 0.5f)});
+    loginButton->setBtnHoverColor(sf::Color(150, 70, 225));
+    loginButton->onClick = [pwordTextboxPtr, unameTxtboxPtr, this](){
+        std::string u = unameTxtboxPtr->getText();
+        std::string p = pwordTextboxPtr->getText();
+        if(mNetClient.attemptLogin(u, p)){
+            mChangeToCanvas = true;
+        }
+    };
+    addGUIElement(std::move(loginButton));
+}
+
+
+
+void MainMenuScene::update(const Input& input, sk::Window& window, float dt, float elapsed){
+    Scene::update(input, window, dt, elapsed);
+
+    if(mChangeToCanvas){
+        mChangeToCanvas = false;
+        mSceneManager.changeScene<CanvasScene>(window, mNetClient);
+    }
 }

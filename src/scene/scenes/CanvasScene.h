@@ -12,6 +12,7 @@
 #include <array>
 #include <vector>
 #include"../../global.h"
+#include "../../networking/NetworkClient.h"
 #include <queue>
 
 #define QUAD_POINT_COUNT 4
@@ -38,6 +39,8 @@ namespace sk {
             sk::Tool mTool;
 
             bool mShowPixelOutlines = true;
+
+            sk::NetworkClient& mNetClient;
 
             std::vector<sf::Color> mColorPalette = {
                 sf::Color(255,255,255),
@@ -76,9 +79,10 @@ namespace sk {
             bool mIsPanning = false;
             sf::Vector2i mLastMousePos = {0,0};
 
+
     
         private:
-            void initButtons(sk::Window& window);
+            void initButtons(sk::Window& window, NetworkClient& net);
             void initCanvas(sk::Window& window);
             void initColorPalette(sk::Window& window);
             void setPixelColor(int x, int y, sf::Color color);
@@ -94,9 +98,11 @@ namespace sk {
             void cameraPan(const Input& input, sk::Window& window);
             void cameraZoom(const Input& input, sk::Window& window);
 
+            void submitArt(NetworkClient& net);
+
 
         public:
-            CanvasScene(sk::Window& window);
+            CanvasScene(sk::Window& window, sk::NetworkClient& net);
             ~CanvasScene();
             void update(const Input& input, sk::Window& window, float dt, float elapsed) override;
             void draw(sk::Window& window) override;

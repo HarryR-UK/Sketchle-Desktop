@@ -202,7 +202,7 @@ void Textbox::update(const Input& input, float dt, float elapsed){
 }
 
 void Textbox::inputLogic(int charTyped){
-    if(mUserInput.size() <= 12) { // 12 character limit
+    if(mUserInput.size() <= 20) { // 12 character limit
         mUserInput += static_cast<char>(charTyped);
         mText.setString(mUserInput + "_");
     } else {

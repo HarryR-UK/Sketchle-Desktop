@@ -10,15 +10,22 @@
 #include "../../gui/Button.h"
 #include "../../gui/Textbox.h"
 #include <SFML/Graphics/Font.hpp>
+#include <atomic>
+#include "../../networking/NetworkClient.h"
+#include "../SceneManager.h"
 
 namespace sk {
     class MainMenuScene : public Scene{
         private:
             sf::Font mFont;
+            sk::NetworkClient& mNetClient;
+            bool mChangeToCanvas{false};
+            sk::SceneManager& mSceneManager;
         private:
         public:
         public:
-            MainMenuScene(sk::Window& window);
+            MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::SceneManager& scManager);
+            void update(const Input& input, sk::Window& window, float dt, float elapsed)override;
           
     };
 

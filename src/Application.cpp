@@ -31,7 +31,7 @@ void Application::render(){
 }
 
 void Application::run(){
-    mSceneManager.changeScene<MainMenuScene>(mWindow);
+    mSceneManager.changeScene<MainMenuScene>(mWindow, mNetworkClient, mSceneManager);
     
     sk::Clock clock;
 
