@@ -1,3 +1,4 @@
+// Author: Harry Rotheram
 #include "Tool.h"
 
 using namespace sk;

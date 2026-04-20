@@ -1,3 +1,5 @@
+// Author: Harry Rotheram
+
 #ifndef TOOL_H
 #define TOOL_H
 

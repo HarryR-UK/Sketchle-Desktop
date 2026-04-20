@@ -1,3 +1,4 @@
+// Author: Harry Rotheram
 #include "NetworkClient.h"
 #include <iostream>
 

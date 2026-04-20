@@ -1,3 +1,4 @@
+// Author: Harry Rotheram
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
