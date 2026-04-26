@@ -95,7 +95,10 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     submitButton->setBtnOutlineColor(sf::Color(104,98,108));
     submitButton->setBtnOutlineThickness(10);    
     submitButton->onClick = [this, &net](){
-        submitArt(net);
+        if(submitArt(net)){
+            clearCanvas();
+            mIsArtSubmitted = true;
+        }
     };
     addGUIElement(std::move(submitButton));    
     
@@ -116,7 +119,7 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
        
 }
 
-void CanvasScene::submitArt(NetworkClient& net){
+bool CanvasScene::submitArt(NetworkClient& net){
     // convert canvas into sf::Image
     // send to network
     sf::Image image;
@@ -130,9 +133,11 @@ void CanvasScene::submitArt(NetworkClient& net){
     
     if(!net.attemptImageSubmit(image)){
         std::cout << "Canvas Error: Could not submit art work" << '\n';
+        return false;
     }
 
     std::cout << "IMAGE UPLOADED SUCCESSFULLY" << '\n';
+    return true;
     
     
 }
@@ -427,7 +432,10 @@ void CanvasScene::cameraPan(const Input& input, sk::Window& window){
 
 void CanvasScene::draw(sk::Window& window){
     window.changeToWorldView();
-    window.getRenderWindow()->draw(mCanvasBuffer);
+
+    if(!mIsArtSubmitted){
+        window.getRenderWindow()->draw(mCanvasBuffer);
+    }
 
     mTool.draw(window);
 

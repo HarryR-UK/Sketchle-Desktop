@@ -80,7 +80,7 @@ namespace sk {
             bool mIsPanning = false;
             sf::Vector2i mLastMousePos = {0,0};
 
-
+            bool mIsArtSubmitted = false;
     
         private:
             void initButtons(sk::Window& window, NetworkClient& net);
@@ -99,7 +99,7 @@ namespace sk {
             void cameraPan(const Input& input, sk::Window& window);
             void cameraZoom(const Input& input, sk::Window& window);
 
-            void submitArt(NetworkClient& net);
+            bool submitArt(NetworkClient& net);
 
 
         public:
