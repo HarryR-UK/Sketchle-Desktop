@@ -14,6 +14,7 @@
 #include"../../global.h"
 #include "../../networking/NetworkClient.h"
 #include <queue>
+#include <cmath>
 
 #define QUAD_POINT_COUNT 4
 

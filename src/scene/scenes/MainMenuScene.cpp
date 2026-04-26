@@ -16,7 +16,7 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
 : mNetClient{net}, mSceneManager{scManager}
 {
     // text button
-    mFont.loadFromFile("assets/arial/ARIAl.TTF");
+    mFont.loadFromFile("assets/arial/ARIAL.TTF");
     sf::Vector2i windowSize = window.getWindowSize();
 
     //Title

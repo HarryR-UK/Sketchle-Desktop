@@ -10,7 +10,7 @@
 using namespace sk;
 
 Application::Application()
-    : mWindow(0, 0, 8)
+    : mWindow(10, 10, 8)
 {
     sf::Vector2u monitorRes = mWindow.getMonitorResolution();
     mWindow.setWindowSize({static_cast<unsigned int>(monitorRes.x * 0.7f), static_cast<unsigned int>(monitorRes.y * 0.7f)});
