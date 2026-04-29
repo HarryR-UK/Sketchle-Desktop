@@ -46,6 +46,9 @@ namespace sk {
 
             void setPosition(const sf::Vector2f& pos);
             void setHoverDotColor(const sf::Color& c);
+            void setCurrentValue(const float& val);
+
+            const float& getCurrentValue() const;
 
 
     };

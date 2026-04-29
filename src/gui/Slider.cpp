@@ -43,9 +43,19 @@ void Slider::setHoverDotColor(const sf::Color& c){
     mDotHoverColor = c;
 }
 
+
+const float& Slider::getCurrentValue() const{
+    return mCurrentValue;
+}
+void Slider::setCurrentValue(const float& val){
+    mCurrentValue = val;
+
+    // set dot to position correlating to bar
+}
+
 void Slider::update(const Input& input){
 
-    // Check hover
+    // check hover
     bool hovering =
         input.mousePositionWindow.x <= mDotShape.getPosition().x + mDotShape.getRadius() &&
         input.mousePositionWindow.x >= mDotShape.getPosition().x - mDotShape.getRadius() &&
