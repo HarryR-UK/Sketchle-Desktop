@@ -116,6 +116,14 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     
     
     addGUIElement(std::move(dailyThemeText));
+
+
+
+    auto brushSizeSlider = std::make_unique<sk::Slider>();
+    brushSizeSlider->init(100, sf::Color::Black, sf::Color::White);
+    brushSizeSlider->setPosition({(float)windowSize.x * 0.2f, (float)windowSize.y * 0.2f});
+
+    addGUIElement(std::move(brushSizeSlider));
        
 }
 

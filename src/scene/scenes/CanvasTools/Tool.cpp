@@ -72,3 +72,7 @@ const bool& Tool::getOutOfBounds(){
 void Tool::draw(sk::Window& window){
     if(!mOutOfBounds) window.getRenderWindow()->draw(mToolOutline);
 }
+
+void Tool::setBrushSize(const unsigned int& s){
+    mBrushSize = s;
+}

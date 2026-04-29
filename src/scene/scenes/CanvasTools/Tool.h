@@ -16,6 +16,7 @@ namespace sk {
             sf::Vector2u mMouseGridPosition;
     
             sf::Color mColorSelected = sf::Color::Red;
+            unsigned int mBrushSize = 1;
 
             const float& mGridPixelSize;
 
@@ -39,6 +40,7 @@ namespace sk {
             void setPixelOutlineThickness(const float& t);
             void setType(ToolType type);
             void setPixelColor(const sf::Color& color);
+            void setBrushSize(const unsigned int& s);
 
             const sf::Color& getColorSelected();;
             const sf::Vector2u& getMouseGridPosition();

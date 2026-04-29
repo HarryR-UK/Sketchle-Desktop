@@ -8,6 +8,7 @@
 #include "../Scene.h"
 #include "../../Window.h"
 #include "../../gui/Button.h"
+#include "../../gui/Slider.h"
 #include "CanvasTools/Tool.h"
 #include <array>
 #include <vector>
