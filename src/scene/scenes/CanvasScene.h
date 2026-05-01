@@ -89,6 +89,8 @@ namespace sk {
             sf::Vector2i mLastMousePos = {0,0};
 
             bool mIsArtSubmitted = false;
+            
+            std::string mSubmitMsg = "";
     
         private:
             void initButtons(sk::Window& window, NetworkClient& net);

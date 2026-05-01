@@ -86,7 +86,17 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     };
     addGUIElement(std::move(gridButton));
         
-    //Submit button
+    //Submit button + message
+    auto submitText = std::make_unique<sk::Button>();
+    submitText->init(mSubmitMsg, {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 70);
+    submitText->setPosition({(float)(windowSize.x * 0.4f) - 100, (float)(windowSize.y * 0.4f)}); 
+    submitText->setBtnOutlineColor(sf::Color::Transparent);
+    submitText->setBtnOutlineThickness(0);    
+    submitText->setTxtOutlineColor(sf::Color::Black);
+    submitText->setTxtOutlineThickness(2);    
+    sk::Button* submitTxtPtr = submitText.get();   
+    addGUIElement(std::move(submitText));
+    
     auto submitButton = std::make_unique<sk::Button>();    
     sf::Image submitImage;
     if(!submitImage.loadFromFile("assets/submit.png")){
@@ -96,11 +106,19 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     submitButton->setPosition({(float)(windowSize.x * 0.95f) - 60, (float)(windowSize.y * 0.85f)}); 
     submitButton->setBtnOutlineColor(sf::Color(104,98,108));
     submitButton->setBtnOutlineThickness(10);    
-    submitButton->onClick = [this, &net](){
+    submitButton->onClick = [this, &net, submitTxtPtr, windowSize](){
         if(submitArt(net)){
             clearCanvas();
-            mIsArtSubmitted = true;
+            if(!mIsArtSubmitted){
+                mIsArtSubmitted = true;
+                submitTxtPtr->setPosition({(float)(windowSize.x * 0.4f) - 100, (float)(windowSize.y * 0.4f)}); 
+                mSubmitMsg = "Sketch uploaded!"; 
+            }else{
+                submitTxtPtr->setPosition({(float)(windowSize.x * 0.3f) - 100, (float)(windowSize.y * 0.4f)}); 
+                mSubmitMsg = "Sketch already uploaded!";
+            }
         }
+        submitTxtPtr->setTxt(mSubmitMsg);
     };
     addGUIElement(std::move(submitButton));    
     
