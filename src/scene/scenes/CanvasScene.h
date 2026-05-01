@@ -81,6 +81,9 @@ namespace sk {
             sk::Slider* mHueSlider = nullptr;
             sk::Slider* mSatSlider = nullptr;
             sk::Slider* mValSlider = nullptr;
+            sk::Button* mHueText = nullptr;
+            sk::Button* mSatText = nullptr;
+            sk::Button* mValText = nullptr;
 
             bool mIsPanning = false;
             sf::Vector2i mLastMousePos = {0,0};

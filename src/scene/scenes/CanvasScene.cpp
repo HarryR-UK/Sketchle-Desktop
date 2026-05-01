@@ -7,6 +7,8 @@
 #include "SFML/System/Vector2.hpp"
 #include <memory>
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 using namespace sk;
 
@@ -22,8 +24,8 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     
     //Tool indicator
     auto toolIndicator = std::make_unique<sk::Button>();
-    toolIndicator->init(brushImage, {45,45});
-    toolIndicator->setPosition({(float)(windowSize.x*0.95f), (float)(windowSize.y * 0.12f)});
+    toolIndicator->init(brushImage, {90,90});
+    toolIndicator->setPosition({(float)(windowSize.x*0.92f), (float)(windowSize.y * 0.2f)});
     toolIndicator->setBtnOutlineColor(sf::Color::White);
     toolIndicator->setBtnOutlineThickness(3);
     toolIndicator->setHoverEnabled(false);
@@ -104,7 +106,7 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     
     
     net.attemptGetDailyTheme();
-    std::string theme = "Todays Theme: " + net.getServerResponse();
+    std::string theme = "Today's Theme: " + net.getServerResponse();
 
     auto dailyThemeText = std::make_unique<sk::Button>();
     dailyThemeText->init(theme, {100,100}, sf::Color::Transparent, sf::Color(180, 100, 255), mFont, 50);
@@ -112,43 +114,71 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
     dailyThemeText->setBtnOutlineColor(sf::Color::Transparent);
     dailyThemeText->setBtnOutlineThickness(0);    
     dailyThemeText->setTxtOutlineColor(sf::Color::Black);
-    dailyThemeText->setTxtOutlineThickness(2);
-    
-    
+    dailyThemeText->setTxtOutlineThickness(2);    
     addGUIElement(std::move(dailyThemeText));
 
 
-
+    /*
     auto brushSizeSlider = std::make_unique<sk::Slider>();
     brushSizeSlider->init(100, sf::Color::Black, sf::Color::White);
     brushSizeSlider->setPosition({(float)windowSize.x * 0.2f, (float)windowSize.y * 0.2f});
 
     addGUIElement(std::move(brushSizeSlider));
+    */
     
-    
-    //Hue slider
+    //Hue slider + text
     auto hueSlider = std::make_unique<sk::Slider>();
-    hueSlider->init(100, sf::Color::Black, sf::Color::White, 0, 360);
-    hueSlider->setPosition({(float)windowSize.x * 0.1f, (float)windowSize.y * 0.78f});
+    hueSlider->init(150, sf::Color::Black, sf::Color::White, 0, 360);
+    hueSlider->setPosition({(float)windowSize.x * 0.1f, (float)windowSize.y * 0.75f});
     hueSlider->setCurrentValue(360);
     mHueSlider = hueSlider.get();
     addGUIElement(std::move(hueSlider));
+    
+    auto hueText = std::make_unique<sk::Button>();
+    hueText->init("Hue: ", {50,50}, sf::Color::Transparent, sf::Color::White, mFont, 30);
+    hueText->setPosition({(float)(windowSize.x * 0.2f), (float)(windowSize.y * 0.72f)}); 
+    hueText->setBtnOutlineColor(sf::Color::Transparent);
+    hueText->setBtnOutlineThickness(0);    
+    hueText->setTxtOutlineColor(sf::Color::Black);
+    hueText->setTxtOutlineThickness(2);
+    mHueText = hueText.get();
+    addGUIElement(std::move(hueText));
 
-    //Saturation slider
+    //Saturation slider + text
     auto satSlider = std::make_unique<sk::Slider>();
-    satSlider->init(100, sf::Color::Black, sf::Color::White, 0.f, 1.f);
+    satSlider->init(150, sf::Color::Black, sf::Color::White, 0.f, 1.f);
     satSlider->setPosition({(float)windowSize.x * 0.1f, (float)windowSize.y * 0.81f});
     satSlider->setCurrentValue(1.0f);
     mSatSlider = satSlider.get();
     addGUIElement(std::move(satSlider));
     
-    //Value slider
+    auto satText = std::make_unique<sk::Button>();
+    satText->init("Sat: ", {50,50}, sf::Color::Transparent, sf::Color::White, mFont, 30);
+    satText->setPosition({(float)(windowSize.x * 0.2f), (float)(windowSize.y * 0.78f)}); 
+    satText->setBtnOutlineColor(sf::Color::Transparent);
+    satText->setBtnOutlineThickness(0);    
+    satText->setTxtOutlineColor(sf::Color::Black);
+    satText->setTxtOutlineThickness(2);
+    mSatText = satText.get();
+    addGUIElement(std::move(satText));
+    
+    //Value slider + text
     auto valSlider = std::make_unique<sk::Slider>();
-    valSlider->init(100, sf::Color::Black, sf::Color::White, 0.f, 1.f);
-    valSlider->setPosition({(float)windowSize.x * 0.1f, (float)windowSize.y * 0.84f});
+    valSlider->init(150, sf::Color::Black, sf::Color::White, 0.f, 1.f);
+    valSlider->setPosition({(float)windowSize.x * 0.1f, (float)windowSize.y * 0.87f});
     valSlider->setCurrentValue(1.0f);
     mValSlider = valSlider.get();
     addGUIElement(std::move(valSlider));
+    
+    auto valText = std::make_unique<sk::Button>();
+    valText->init("Val: ", {50,50}, sf::Color::Transparent, sf::Color::White, mFont, 30);
+    valText->setPosition({(float)(windowSize.x * 0.2f), (float)(windowSize.y * 0.84f)}); 
+    valText->setBtnOutlineColor(sf::Color::Transparent);
+    valText->setBtnOutlineThickness(0);    
+    valText->setTxtOutlineColor(sf::Color::Black);
+    valText->setTxtOutlineThickness(2);
+    mValText = valText.get();
+    addGUIElement(std::move(valText));
        
 }
 
@@ -277,7 +307,7 @@ void CanvasScene::initColorPalette(sk::Window& window){
 
     selectedColorIcon->init(
         "",
-        {size * 1.5f, size * 1.5f},
+        {size * 3.0f, size * 3.0f},
         mTool.getColorSelected(),
         sf::Color::White,
         mFont,
@@ -285,8 +315,8 @@ void CanvasScene::initColorPalette(sk::Window& window){
     );
 
     selectedColorIcon->setPosition({
-        window.getWindowSize().x * 0.95f,
-        window.getWindowSize().y * 0.05f
+        window.getWindowSize().x * 0.92f,
+        window.getWindowSize().y * 0.08f
     });
 
     selectedColorIcon->setBtnOutlineColor(sf::Color::White);
@@ -519,7 +549,6 @@ void CanvasScene::update(const Input& input, sk::Window& window, float dt, float
 
     }
 
-
     cameraPan(input, window);
     cameraZoom(input, window);
 
@@ -527,12 +556,25 @@ void CanvasScene::update(const Input& input, sk::Window& window, float dt, float
     
     // always set colour to slider value
     if(mHueSlider && mSatSlider && mValSlider){
-        sf::Color c = hsvToRgb(mHueSlider->getCurrentValue(), mSatSlider->getCurrentValue(), mValSlider->getCurrentValue());
+        float h = mHueSlider->getCurrentValue();
+        float s = mSatSlider->getCurrentValue();
+        float v = mValSlider->getCurrentValue();
+        sf::Color c = hsvToRgb(h, s, v);
         mTool.setPixelColor(c);
         if(mSelectedColorIcon){
             mSelectedColorIcon->setBtnFillColor(c);
             mSelectedColorIcon->setBtnHoverColor(c);
         }
+        // round values for cleaner output
+        auto cutFloat = [](float val, int precision = 2){
+            std::ostringstream ss;
+            ss << std::fixed << std::setprecision(precision) << val;
+            return ss.str();
+        };
+        // set slider text to current hsv values
+        mHueText->setTxt("Hue: " + cutFloat(h, 0));
+        mSatText->setTxt("Sat: " + cutFloat(s, 2));          
+        mValText->setTxt("Val: " + cutFloat(v, 2));
     }
 }
 
