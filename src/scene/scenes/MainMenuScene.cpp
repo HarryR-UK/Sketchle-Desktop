@@ -124,14 +124,6 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     };
     addGUIElement(std::move(loginButton));
     
-    
-    auto brushSizeSlider = std::make_unique<sk::Slider>();
-    brushSizeSlider->init(100, sf::Color::Black, sf::Color::White, 1.0f, 20.0f);
-    brushSizeSlider->setPosition({(float)windowSize.x * 0.05f, (float)windowSize.y * 0.1f});
-
-    addGUIElement(std::move(brushSizeSlider));
-    
-
 }
 
 

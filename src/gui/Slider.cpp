@@ -48,9 +48,13 @@ const float& Slider::getCurrentValue() const{
     return mCurrentValue;
 }
 void Slider::setCurrentValue(const float& val){
-    mCurrentValue = val;
+    mCurrentValue = std::clamp(val, mMinValue, mMaxValue);
 
-    // set dot to position correlating to bar
+    // set dot to position correlating to bar OKAY FINE MAYBE I WILL
+    
+    float percentage = (mCurrentValue - mMinValue) / (mMaxValue - mMinValue);
+    float x = mBarShape.getPosition().x + percentage * mBarLength;
+    mDotShape.setPosition({x, mDotShape.getPosition().y});
 }
 
 void Slider::update(const Input& input){
@@ -109,7 +113,7 @@ void Slider::update(const Input& input){
     }
 
 
-    std::cout << "VALUE: " << mCurrentValue << '\n';
+    //std::cout << "VALUE: " << mCurrentValue << '\n';
 
 }
 void Slider::draw(sk::Window& window){

@@ -77,6 +77,10 @@ namespace sk {
 
 
             sk::Button* mSelectedColorIcon;
+            
+            sk::Slider* mHueSlider = nullptr;
+            sk::Slider* mSatSlider = nullptr;
+            sk::Slider* mValSlider = nullptr;
 
             bool mIsPanning = false;
             sf::Vector2i mLastMousePos = {0,0};
