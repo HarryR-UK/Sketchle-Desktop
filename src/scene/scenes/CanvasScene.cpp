@@ -212,6 +212,9 @@ sf::Color hsvToRgb(float h, float s, float v){
         return sf::Color(c, c, c);
     }
     
+    h = std::fmod(h, 360.f);
+    if(h < 0.f) h += 360.f; // handle wraparound
+    
     float hSec = h / 60.f; // split hue into 6 sectors
     int iSec = static_cast<int>(hSec); // get sector number
     float fSec = hSec - iSec; // get position in current sector
