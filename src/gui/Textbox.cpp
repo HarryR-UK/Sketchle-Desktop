@@ -30,6 +30,14 @@ void Textbox::init(const std::string& txt, const sf::Vector2f& size, const sf::C
     mTboxShape.setFillColor(bgColor);
 }
 
+static std::string censorString(const std::string& input, bool showCursor){
+    std::string censored(input.size(), '*');
+    if(showCursor){
+        censored += "_";
+    }
+    return censored;
+}
+
 void Textbox::setPosition(const sf::Vector2f& pos){
     mTboxShape.setPosition(pos);
     mPosition = sf::Vector2f(pos);
@@ -94,7 +102,7 @@ void Textbox::update(const Input& input){
             if(mUserInput.empty()){
                 mText.setString("_"); // clear input if showing placeholder text
             } else {
-                mText.setString(mUserInput + "_"); // restore cursor
+                mText.setString(mCensor ? censorString(mUserInput, true) : mUserInput + "_"); // restore cursor
             }
             //std::cout << "Textbox selected" << '\n';
         }
@@ -106,7 +114,7 @@ void Textbox::update(const Input& input){
             if(mUserInput.empty()){
                 mText.setString(mPlaceholder); // replace placeholder if user typed nothing
             } else {
-                mText.setString(mUserInput); // clear cursor when not selected
+                mText.setString(mCensor ? censorString(mUserInput, false) : mUserInput); // clear cursor when not selected
             }
         }
     }
@@ -153,7 +161,7 @@ void Textbox::update(const Input& input, float dt, float elapsed){
             if(mUserInput.empty()){
                 mText.setString("_"); // clear input if showing placeholder text
             } else {
-                mText.setString(mUserInput + "_"); // restore cursor
+                mText.setString(mCensor ? censorString(mUserInput, true) : mUserInput + "_"); // restore cursor
             }
             //std::cout << "Textbox selected" << '\n';
         }
@@ -165,7 +173,7 @@ void Textbox::update(const Input& input, float dt, float elapsed){
             if(mUserInput.empty()){
                 mText.setString(mPlaceholder); // replace placeholder if user typed nothing
             } else {
-                mText.setString(mUserInput); // clear cursor when not selected
+                mText.setString(mCensor ? censorString(mUserInput, false) : mUserInput); // clear cursor when not selected
             }
         }
     }
@@ -178,14 +186,14 @@ void Textbox::update(const Input& input, float dt, float elapsed){
             mShowCursor = !mShowCursor;
             mCursorTimer = 0.f;
         }      
-        mText.setString(mUserInput + (mShowCursor ? "_" : " "));
+        mText.setString(mCensor ? censorString(mUserInput, mShowCursor) : mUserInput + (mShowCursor ? "_" : " "));
         
         int charTyped = input.lastCharTyped;
         if(charTyped > 0 && charTyped < 128){
             if(charTyped == 8){ // backspace
                 if(!mUserInput.empty()){
                     mUserInput.pop_back();
-                    mText.setString(mUserInput + "_");
+                    mText.setString(mCensor ? censorString(mUserInput, true) : mUserInput + "_");
                 }
             }
             else if(charTyped != 13){
@@ -204,7 +212,7 @@ void Textbox::update(const Input& input, float dt, float elapsed){
 void Textbox::inputLogic(int charTyped){
     if(mUserInput.size() <= 20) { // 12 character limit
         mUserInput += static_cast<char>(charTyped);
-        mText.setString(mUserInput + "_");
+        mText.setString(mCensor ? censorString(mUserInput, true) : mUserInput + "_");
     } else {
         return;
     }  

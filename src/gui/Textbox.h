@@ -25,7 +25,8 @@ namespace sk {
             bool mIsSelected = false;
             bool mKeyHeld = false;
             bool mShowCursor = true;
-            float mCursorTimer = 0.f;            
+            float mCursorTimer = 0.f;          
+            bool mCensor = false;
             
             std::string mUserInput = "";
             std::string mPlaceholder = "";
@@ -57,6 +58,10 @@ namespace sk {
             std::string getText();
                                     
             void setPlaceholder(const std::string& placeholder);
+            
+            void setCensor(bool censor){
+                mCensor = censor;
+            }
             
             std::function<void()> onEnter;
             

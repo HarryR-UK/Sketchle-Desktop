@@ -89,7 +89,9 @@ MainMenuScene::MainMenuScene(sk::Window& window, sk::NetworkClient& net, sk::Sce
     };
     
     sk::Textbox* pwordTextboxPtr = mPwordTextbox.get();
-
+    
+    mPwordTextbox->setCensor(true); // hides text in password box
+    
     addGUIElement(std::move(mPwordTextbox));   
     
     
