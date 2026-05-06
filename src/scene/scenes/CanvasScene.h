@@ -93,7 +93,6 @@ namespace sk {
 
             bool mIsArtSubmitted = false;
             
-            std::string mSubmitMsg = "";
     
         private:
             void initButtons(sk::Window& window, NetworkClient& net);

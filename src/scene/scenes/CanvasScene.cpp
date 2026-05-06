@@ -88,7 +88,7 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
         
     //Submit button + message
     auto submitText = std::make_unique<sk::Button>();
-    submitText->init(mSubmitMsg, {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 30);
+    submitText->init("", {100,100}, sf::Color::Transparent, sf::Color(255,0,0), mFont, 30);
     submitText->setPosition({(float)(windowSize.x * 0.4f) - 100, (float)(windowSize.y * 0.4f)}); 
     submitText->setBtnOutlineColor(sf::Color::Transparent);
     submitText->setBtnOutlineThickness(0);    
@@ -112,10 +112,8 @@ void CanvasScene::initButtons(sk::Window& window, NetworkClient& net){
             if(!mIsArtSubmitted){
                 mIsArtSubmitted = true;
                 submitTxtPtr->setPosition({(float)(windowSize.x * 0.4f) - 100, (float)(windowSize.y * 0.4f)}); 
-                mSubmitMsg = "Sketch uploaded!"; 
             }else{
                 submitTxtPtr->setPosition({(float)(windowSize.x * 0.3f) - 100, (float)(windowSize.y * 0.4f)}); 
-                mSubmitMsg = "Sketch already uploaded!";
             }
         }
         submitTxtPtr->setTxt(net.getServerResponse());
