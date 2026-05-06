@@ -14,6 +14,7 @@
 #include <vector>
 #include"../../global.h"
 #include "../../networking/NetworkClient.h"
+#include "../../utils/ColorUtil.h"
 #include <queue>
 #include <cmath>
 
@@ -23,6 +24,8 @@ namespace sk {
     class CanvasScene : public Scene{
         private:
             sf::Font mFont;
+
+            ColorUtil mColorUtil;
             
             const sf::Vector2u mCanvasSize = {CANVAS_SIZE, CANVAS_SIZE};
             const float  mDefaultPixelSize = 9.f;

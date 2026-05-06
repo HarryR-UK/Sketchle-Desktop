@@ -10,13 +10,12 @@
 #include <cstddef>
 #include <string>
 namespace sk {
-    class CurlUtil{
-        public:
-            static size_t writeCallback(void* contents, size_t size, size_t nmemb, std::string* data){
-                size_t total = size * nmemb;
-                data->append((char*)contents, total);
-                return total;
-            }
+    struct CurlUtil{
+        static size_t writeCallback(void* contents, size_t size, size_t nmemb, std::string* data){
+            size_t total = size * nmemb;
+            data->append((char*)contents, total);
+            return total;
+        }
         
     };
 }
