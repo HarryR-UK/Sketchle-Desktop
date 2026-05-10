@@ -1,3 +1,6 @@
+//
+// Author: Harry Rotheram
+//
 #include "Slider.h"
 #include "SFML/System/Vector2.hpp"
 using namespace sk;
