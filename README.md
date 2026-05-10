@@ -31,6 +31,13 @@ Once complete, the user will be presented with an empty canvas and a set of colo
 
 As soon as the user is happy with their drawing a simple tap of the submit button will let the user know they have send their art work. As this artwork is only once a day, the user cannot submit more than one.
 
+### Controls
+`Right Mouse Button` can be held to pan around the canvas
+`Scroll Wheel` can be used to zoom in and out
+`Left Mouse Button` can be clicked or held to draw / erase / fill
+
+Other controls can be seen via the GUI
+
 ## Instructions (How to Compile and Run)
 As this program is made in C++, CMake is used as a compilation tool. This allows for library paths to be found easily. SFMLv2.6 is automatically fetched via CMake. 
 
